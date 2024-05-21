@@ -4,8 +4,7 @@ conn = psycopg2.connect(database='ZakatQu', user='postgres', password='rendydp42
 
 cur = conn.cursor()
 
-def login_query(username: str, password: str) -> any :
-    pass
+
 
 def login_query(username: str, password: str) -> list[tuple] :
     cur.execute(f"SELECT * FROM amil_zakat WHERE left(nik, 5)= '{username}' AND right(nik, 5)= '{password}';")
