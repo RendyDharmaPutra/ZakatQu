@@ -57,6 +57,10 @@ def Tambah_pembayaran(akun):
     
     QueryInput(InputQuery, NamaTabel, NamaKolom)
     UpdatePemberi(NamaPemberi)
+    
+    print("Data Sudah Disimpan")
+    input()
+    pembayaran()
 
 
 def InputNamaPemberi():

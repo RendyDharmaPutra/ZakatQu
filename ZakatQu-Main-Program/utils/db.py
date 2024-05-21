@@ -4,16 +4,18 @@ import psycopg2
 conn = psycopg2.connect(database='ZakatQu', user='postgres', password='rendydp424', host='localhost', port=5432)
 cur = conn.cursor()
 
-
+# UNIVERSAL================== #
 
 def login_query(username: str, password: str) -> list[tuple] :
     cur.execute(f"SELECT * FROM amil_zakat WHERE left(nik, 5)= '{username}' AND right(nik, 5)= '{password}';")
     data = cur.fetchall()
-
-    # cur.close()
-    # conn.close()
-
     return data
+
+def QueryInput(InputQuery, NamaTabel, NamaKolom):
+    cur.execute("INSERT INTO " + NamaTabel + " " + f'({NamaKolom})' + " VALUES " + f'{InputQuery}'.replace("[", "(").replace("]", ")"))
+    conn.commit()
+
+# =========================== #
 
 def read_Daftar_Pemberi():
     cur.execute("Select * From pemberi_zakat;")
@@ -70,11 +72,6 @@ def Hapus_data_Pemberi():
     cur.execute(query_delete)
     print("Data berhasil dihapus")
 
-
-def QueryInput(InputQuery, NamaTabel, NamaKolom):
-    cur.execute("INSERT INTO " + NamaTabel + " " + f'({NamaKolom})' + " VALUES " + f'{InputQuery}'.replace("[", "(").replace("]", ")"))
-    conn.commit()
-    
 def UpdatePemberi(InputPemberi):
     cur.execute(f"UPDATE pemberi_zakat SET id_status_pembayaran_zakat = 1 where id_pemberi_zakat = '{InputPemberi}'")
     conn.commit()
