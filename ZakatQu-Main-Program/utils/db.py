@@ -135,28 +135,26 @@ def Edit_data_Penerima():
     Lihat_data_Penerima()
     id_penerima=(input("Masukkan id penerima yang ingin di edit : "))
     select_query=f"SELECT * FROM  penerima_zakat WHERE id_penerima_zakat ={id_penerima}"
-    cur.execute(select_query,(id_penerima))
+    cur.execute(select_query,(id_penerima,))
     data2=cur.fetchone()
 
     if data2:
         print('Data saat ini:')
         print(f'id penerima zakat saat ini : {data2[0]}')
-        print(f'nama penerima zakat saat ini: {data2[1]}')
-        print(f'nik penerima zakat saat ini: {data2[2]}')
+        print(f'nama kepala keluarga saat ini: {data2[1]}')
+        print(f'no KK penerima zakat saat ini: {data2[2]}')
         print(f'alamat penerima zakat saat ini: {data2[3]}')
         print(f'RT/RW penerima zakat saat ini: {data2[4]}')
         print(f'nomor telepon penerima zakat saat ini: {data2[5]}')
 
     nama_penerima = input(f"Masukkan nama penerima yang baru : ") or data2[1]
-    nik = input(f"Masukkan nik yang baru : ") or data2[2]
+    no_kk = input(f"Masukkan no KK yang baru : ") or data2[2]
     alamat= input(f"Masukkan alamat yang baru : ") or data2[3]
     RtRW = input(f"Masukkan RT/RW yang baru : ") or data2[4]
     telepon = input(f"Masukkan nomor telepon yang baru : ") or data2[5]
-    statusBayar= input(f"Masukkan status pembayaran yang baru : ") or data2[6]
-    statusBayar=int(statusBayar)
 
-    queryUpdate=f'UPDATE penerima_zakat SET nama_penerima_zakat = %s,nik= %s,alamat =%s,"RT/RW"=%s,nomor_telepon=%s,id_status_pembayaran_zakat=%s WHERE id_penerima_zakat = %s'
-    cur.execute(queryUpdate,(nama_penerima,nik,alamat,RtRW,telepon,statusBayar,id_dipilih))
+    queryUpdate=f'UPDATE penerima_zakat SET nama_kepala_keluarga = %s,no_kk= %s,alamat =%s,"RT/RW"=%s,nomor_telepon=%s WHERE id_penerima_zakat = %s'
+    cur.execute(queryUpdate,(nama_penerima,no_kk,alamat,RtRW,telepon,id_penerima))
     print("Data berhasil diperbarui")
 
 def Hapus_data_Penerima():
