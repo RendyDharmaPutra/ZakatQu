@@ -10,9 +10,16 @@ from utils.terminal import clear_screen
 from datetime import date
 
 def pembayaran(akun):
+
+    
     print("Halaman Pemberi")
+
+    # print daftar pembayaran
+
     print("Tambah[1], Edit[2], Hapus[3], Kembali[4]")
     InputPengguna = input("Masukkan fitur yang dipilih : ")
+
+
     match InputPengguna:
         case '1':
             Tambah_pembayaran(akun)
@@ -26,10 +33,14 @@ def pembayaran(akun):
             return
           
 def Tambah_pembayaran(akun):
-    Status = "Add"
+    # Status = "Add" <- Hapus
     InputQuery = []
+
+    # Letakkan di atas Fungsi Halaman
     NamaTabel = 'pembayaran_zakat'
     NamaKolom = 'besar_pemberian, tanggal_pemberian, id_amil_zakat, id_pemberi_zakat, id_bentuk_zakat, id_jenis_zakat'
+
+    # Jangan diupdate sampai  hasil dari inputKeteranganZakat bisa disolve untuk dimasukkan ke inputquery secara langsung 
     NamaPemberi = InputNamaPemberi()
     JenisZakat, BentukZakat, JumlahZakat = InputKeteranganZakat()
     AmilZakat = akun[0][0]
@@ -42,6 +53,7 @@ def Tambah_pembayaran(akun):
     InputQuery.append(NamaPemberi)
     InputQuery.append(BentukZakat)
     InputQuery.append(JenisZakat)
+    
     
     QueryInput(InputQuery, NamaTabel, NamaKolom)
     UpdatePemberi(NamaPemberi)
