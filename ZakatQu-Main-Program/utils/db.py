@@ -91,22 +91,6 @@ def ReadData():
 
     for i in data:
         print(str(i))
-
-def searchBentukZakat(Input):
-    cur.execute(f"SELECT * FROM bentuk_zakat where id_bentuk_zakat = '{Input}';")
-    data = cur.fetchall()
-    if data:
-        return data
-    else:
-        return "Data Tidak Ada"
-    
-def searchJenisZakat(Input):
-    cur.execute(f"SELECT * FROM jenis_zakat where id_jenis_zakat = '{Input}';")
-    data = cur.fetchall()
-    if data:
-        return data
-    else:
-        return "Data Tidak Ada"
     
 def read_amil(nik: str = '') -> list[tuple] :
 
