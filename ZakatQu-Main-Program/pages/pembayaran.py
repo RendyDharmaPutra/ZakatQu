@@ -10,6 +10,7 @@ from utils.terminal import clear_screen
 from datetime import date
 
 def pembayaran(akun):
+    clear_screen()
     print("Halaman Pemberi")
     print("Tambah[1], Edit[2], Hapus[3], Kembali[4]")
     InputPengguna = input("Masukkan fitur yang dipilih : ")
@@ -45,6 +46,10 @@ def Tambah_pembayaran(akun):
     
     QueryInput(InputQuery, NamaTabel, NamaKolom)
     UpdatePemberi(NamaPemberi)
+    
+    print("Data Sudah Disimpan")
+    input()
+    pembayaran()
 
 
 def InputNamaPemberi():
