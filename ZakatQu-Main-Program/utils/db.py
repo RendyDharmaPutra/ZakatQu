@@ -1,7 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='rendydp424', host='localhost', port=5432)
-
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='12345678', host='localhost', port=5432)
 cur = conn.cursor()
 
 def login_query(username: str, password: str) -> any :
@@ -105,3 +104,57 @@ def read_amil() -> list[tuple] :
     data = cur.fetchall()
 
     return data
+
+"""Koneksi ke Penerima Zakat"""
+
+def Tambah_data_Penerima():
+    nama_kepala_penerima = input("Masukkan nama penerima zakat : ")
+    noKK_penerima=input("Masukkan NIK penerima zakat : ")
+    alamat_penerima=input("Masukkan alamat penerima zakat : ")
+    RtRw_penerima=input("Masukkan RT/RW penerima zakat : ")
+    telepon_penerima= input("Masukkan nomor telepon penerima zakat : ")
+
+    query=f'INSERT INTO penerima_zakat(nama_kepala_keluarga,no_kk,alamat,"RT/RW",nomor_telepon) VALUES(%s,%s,%s,%s,%s)'
+    cur.execute(query,(nama_kepala_penerima,noKK_penerima,alamat_penerima,RtRw_penerima,telepon_penerima))
+    print("Data berhasil ditambahkan")
+    conn.commit()
+def Lihat_data_Penerima():
+    cur.execute("Select * From penerima_zakat;")
+    data=cur.fetchall()
+    for i in data:
+        print(i)
+
+def Edit_data_Penerima():
+    Lihat_data_Penerima()
+    id_penerima=(input("Masukkan id penerima yang ingin di edit : "))
+    select_query=f"SELECT * FROM  penerima_zakat WHERE id_penerima_zakat ={id_penerima}"
+    cur.execute(select_query,(id_penerima))
+    data2=cur.fetchone()
+
+    if data2:
+        print('Data saat ini:')
+        print(f'id penerima zakat saat ini : {data2[0]}')
+        print(f'nama penerima zakat saat ini: {data2[1]}')
+        print(f'nik penerima zakat saat ini: {data2[2]}')
+        print(f'alamat penerima zakat saat ini: {data2[3]}')
+        print(f'RT/RW penerima zakat saat ini: {data2[4]}')
+        print(f'nomor telepon penerima zakat saat ini: {data2[5]}')
+
+    nama_penerima = input(f"Masukkan nama penerima yang baru : ") or data2[1]
+    nik = input(f"Masukkan nik yang baru : ") or data2[2]
+    alamat= input(f"Masukkan alamat yang baru : ") or data2[3]
+    RtRW = input(f"Masukkan RT/RW yang baru : ") or data2[4]
+    telepon = input(f"Masukkan nomor telepon yang baru : ") or data2[5]
+    statusBayar= input(f"Masukkan status pembayaran yang baru : ") or data2[6]
+    statusBayar=int(statusBayar)
+
+    queryUpdate=f'UPDATE penerima_zakat SET nama_penerima_zakat = %s,nik= %s,alamat =%s,"RT/RW"=%s,nomor_telepon=%s,id_status_pembayaran_zakat=%s WHERE id_penerima_zakat = %s'
+    cur.execute(queryUpdate,(nama_penerima,nik,alamat,RtRW,telepon,statusBayar,id_dipilih))
+    print("Data berhasil diperbarui")
+
+def Hapus_data_Penerima():
+    Lihat_data_Penerima()
+    idPenerima = input('Masukkan id penerima yang ingin dihapus: ')
+    query_delete = f"DELETE FROM penerima_zakat WHERE id_penerima_zakat = {idPenerima}"
+    cur.execute(query_delete)
+    conn.commit()
