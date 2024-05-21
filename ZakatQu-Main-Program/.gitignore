@@ -1,0 +1,7 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/.vscode
+database.ini
+**/__pycache__
+__pycache__
