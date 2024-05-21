@@ -17,7 +17,14 @@ def main_menu(var: str, akun: List[str] | str):
     # Placeholder
     match var:
         case '1':
-            amil.amil(akun)
+            if akun == "Takmir" :
+                amil.amil(akun)
+                return ''
+                
+                # input()
+            print("\nAnda tidak memiliki izin!")
+            
+            input("Enter untuk kembali ke Halaman utama")
         case '2':
             pembayaran.pembayaran(akun)
         case '3':
