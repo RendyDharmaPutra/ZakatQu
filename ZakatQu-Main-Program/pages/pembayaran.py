@@ -5,6 +5,7 @@ from utils.db import UpdatePemberi
 from utils.db import read_pemberi
 from utils.db import read_pembayaran
 from utils.db import read_pembayaran_with_join
+from utils.db import Update_data
 from utils.terminal import clear_screen
 
 from datetime import date
@@ -212,6 +213,12 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
         Jumlah_Pemberian = UpdateJumlahZakat(Bentuk_Zakat) or DataTerpanggil[0][1]
         
         
+        Query = f"id_pemberi_zakat = {Id_Pemberi}, id_jenis_zakat = {Jenis_Zakat}, id_bentuk_zakat = {Bentuk_Zakat}, besar_pemberian = {Jumlah_Pemberian} where id_pembayaran = {InputIdPembayaran}"
+        
+        Update_data(NamaTabel, Query)
+        
+        Notifikasi = "Data Berhasil Diubah"
+        
 def UpdateBentukZakat(Jenis_Zakat):
     
     Notifikasi = ''
@@ -235,7 +242,7 @@ def UpdateBentukZakat(Jenis_Zakat):
                     Notifikasi = "Input tidak valid"
                     continue
         elif Jenis_Zakat == 2:
-            print("[(2) Emas], [(3) Uang]")
+            print("[(2) Uang], [(3) Emas]")
             InputBentukZakat = input("Masukkan Bentuk Zakat : ")
             match InputBentukZakat:
                 case "":

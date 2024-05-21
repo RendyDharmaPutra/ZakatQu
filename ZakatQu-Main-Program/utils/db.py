@@ -148,6 +148,11 @@ def read_amil(nik: str = '') -> list[tuple] :
     
     return -1
 
+def Update_data(NamaTabel, Query):
+    
+    cur.execute(f"UPDATE {NamaTabel} SET {Query}")
+    conn.commit()
+
 """Koneksi ke Penerima Zakat"""
 
 def Tambah_data_Penerima():
