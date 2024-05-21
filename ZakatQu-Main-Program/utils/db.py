@@ -72,8 +72,6 @@ def Hapus_data_Pemberi():
     cur.execute(query_delete)
     print("Data berhasil dihapus")
 
-
-    
 def UpdatePemberi(InputPemberi):
     cur.execute(f"UPDATE pemberi_zakat SET id_status_pembayaran_zakat = 1 where id_pemberi_zakat = '{InputPemberi}'")
     conn.commit()
