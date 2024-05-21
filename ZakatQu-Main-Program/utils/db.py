@@ -3,8 +3,7 @@ import psycopg2
 conn = psycopg2.connect(database='ZakatQu', user='postgres', password='12345678', host='localhost', port=5432)
 cur = conn.cursor()
 
-def login_query(username: str, password: str) -> any :
-    pass
+
 
 def login_query(username: str, password: str) -> list[tuple] :
     cur.execute(f"SELECT * FROM amil_zakat WHERE left(nik, 5)= '{username}' AND right(nik, 5)= '{password}';")
@@ -99,8 +98,16 @@ def searchJenisZakat(Input):
     else:
         return "Data Tidak Ada"
     
-def read_amil() -> list[tuple] :
-    cur.execute(f"SELECT * FROM amil_zakat")
+def read_amil(nik: str = '') -> list[tuple] :
+
+    search: str = ''
+
+    if len(nik) > 0 :
+        # cur.execute(f"SELECT * FROM amil_zakat")
+        search = f"WHERE nik = '{nik}'"
+        
+
+    cur.execute(f"SELECT * FROM amil_zakat {search}")
     data = cur.fetchall()
 
     return data
