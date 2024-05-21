@@ -1,7 +1,7 @@
 import psycopg2
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='12345678', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='rendydp424', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -84,9 +84,14 @@ def searchPemberi(Input):
     else:
         return "Data Tidak Ada"
 
-def ReadData():
-    Query = "SELECT * FROM pemberi_zakat"
-    cur.execute(Query)
+def ReadData(id: str | int = ''):
+
+    search: str = ''
+
+    if type(id) == int :
+        search = f"WHERE id_pemberi_zakat = {id}"
+
+    cur.execute(f"SELECT * FROM pemberi_zakat {search}")
     data=cur.fetchall()
 
     for i in data:
@@ -97,14 +102,16 @@ def read_amil(nik: str = '') -> list[tuple] :
     search: str = ''
 
     if len(nik) > 0 :
-        # cur.execute(f"SELECT * FROM amil_zakat")
         search = f"WHERE nik = '{nik}'"
         
 
     cur.execute(f"SELECT * FROM amil_zakat {search}")
     data = cur.fetchall()
 
-    return data
+    if data :
+        return data
+    
+    return -1
 
 """Koneksi ke Penerima Zakat"""
 

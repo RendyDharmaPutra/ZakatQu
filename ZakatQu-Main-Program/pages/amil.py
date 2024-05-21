@@ -10,11 +10,11 @@ def amil(akun: str):
 
         print("Halaman Amil\n")
 
-        data = read_amil()
-        print(data)
+        print(read_amil())
 
         print("\nTambah(1), Ubah(2), Hapus(3), Keluar(0)")
         fitur = input("Masukkan fitur yang dipilih : ")
+
 
         match fitur :
             case '1' :
@@ -75,6 +75,7 @@ def tambah_amil(tabel_data, kolom_data) :
             # input("Tekan Enter untuk kembali")
 
             continue
+
 
         # Insert Into Database
         QueryInput(data_baru, tabel_data, kolom_data)
