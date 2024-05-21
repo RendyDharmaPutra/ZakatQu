@@ -99,8 +99,19 @@ def searchJenisZakat(Input):
     else:
         return "Data Tidak Ada"
     
-def read_amil() -> list[tuple] :
-    cur.execute(f"SELECT * FROM amil_zakat")
+def read_amil(nik: str = '') -> list[tuple] :
+
+    search: str = ''
+
+    if len(nik) > 0 :
+        # cur.execute(f"SELECT * FROM amil_zakat")
+        search = f"WHERE nik = '{nik}'"
+        
+
+    cur.execute(f"SELECT * FROM amil_zakat {search}")
     data = cur.fetchall()
 
-    return data
+    if data :
+        return data
+    
+    return -1
