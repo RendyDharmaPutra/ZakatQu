@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(database='Zakatqu', user='postgres', password='rendydp424', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
 
 cur = conn.cursor()
 
@@ -75,14 +75,26 @@ def Hapus_data_Pemberi():
 def QueryInput(InputQuery, NamaTabel, NamaKolom):
     cur.execute("INSERT INTO " + NamaTabel + " " + f'({NamaKolom})' + " VALUES " + f'{InputQuery}'.replace("[", "(").replace("]", ")"))
     conn.commit()
+    
+def UpdatePemberi(InputPemberi):
+    cur.execute(f"UPDATE pemberi_zakat SET id_status_pembayaran_zakat = 1 where id_pemberi_zakat = '{InputPemberi}'")
+    conn.commit()
 
 def searchPemberi(Input):
-    cur.execute(f"SELECT * FROM pemberi_zakat where nama_pemberi_zakat = '{Input}';")
+    cur.execute(f"SELECT * FROM pemberi_zakat where id_pemberi_zakat = {Input}")
     data = cur.fetchall()
     if data:
         return data
     else:
         return "Data Tidak Ada"
+
+def ReadData():
+    Query = "SELECT * FROM pemberi_zakat"
+    cur.execute(Query)
+    data=cur.fetchall()
+
+    for i in data:
+        print(str(i))
 
 def searchBentukZakat(Input):
     cur.execute(f"SELECT * FROM bentuk_zakat where id_bentuk_zakat = '{Input}';")

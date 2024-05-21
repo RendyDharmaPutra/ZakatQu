@@ -19,7 +19,7 @@ def main_menu(var: str, akun: List[str] | str):
         case '1':
             amil.amil(akun)
         case '2':
-            pembayaran.pembayaran()
+            pembayaran.pembayaran(akun)
         case '3':
             distribusi.distribusi()
         case '4':
