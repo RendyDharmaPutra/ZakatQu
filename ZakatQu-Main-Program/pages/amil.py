@@ -101,8 +101,51 @@ def tambah_amil(tabel_data, kolom_data) :
 
 
 
-def ubah_amil() :
-    print("Ubah")
+def ubah_amil(tabel_data, kolom_data) :
+    message: str = ''
+
+    while True :
+        data_baru: list[str] = []
+        
+        
+        clear_screen()
+
+        print("Ubah Amil\n")
+        
+        # Metode message 2
+        if len(message) > 0 :
+            print(f"{message}\n")
+
+
+        confirm: str = input("Masukkan 0 untuk keluar dari fitur : ")
+
+        if confirm == '0' :
+            return -1
+        
+        elif len(confirm) > 0 and confirm != '0' :
+            message = "Input tidak valid"
+            
+            continue
+
+
+        print(read_amil())
+
+        data_search = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))[0]
+
+        print(data_search)
+
+        input()
+
+        if data_search != -1 :
+            message = "NIK yang dimasukkan sudah terdaftar!"
+
+            continue
+
+
+        # Insert Into Database
+        QueryInput(data_baru, tabel_data, kolom_data)
+
+        message = "Berhasil menambah Amil"
     
 
 
