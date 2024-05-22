@@ -1,7 +1,7 @@
 import psycopg2
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='rendydp424', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -147,6 +147,11 @@ def read_amil(nik: str = '') -> list[tuple] :
         return data
     
     return -1
+
+def del_amil(nik: str) :
+    
+    cur.execute(f"DELETE FROM amil_zakat WHERE nik = '{nik}'")
+    conn.commit()
 
 def Update_data(NamaTabel, Query):
     

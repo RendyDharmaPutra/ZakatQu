@@ -1,4 +1,4 @@
-from utils.db import read_amil, QueryInput
+from utils.db import del_amil, read_amil, QueryInput
 from utils.terminal import clear_screen
 
 def amil(akun: str):
@@ -91,10 +91,6 @@ def tambah_amil(tabel_data, kolom_data) :
         if data_search != -1 :
             message = "NIK yang dimasukkan sudah terdaftar!"
 
-            # Metode message 1
-            # print("NIK yang dimasukkan sudah terdaftar!")
-            # input("Tekan Enter untuk kembali")
-
             continue
 
 
@@ -105,11 +101,51 @@ def tambah_amil(tabel_data, kolom_data) :
 
 
 
-
-
-
 def ubah_amil() :
     print("Ubah")
     
-def hapus_amil() :
-    print("Hapus")
+
+
+def hapus_amil(tabel_data, kolom_data) :
+    message: str = ''
+
+    while True :
+        data: str = ''
+        
+        
+        clear_screen()
+
+        print("Hapus Amil\n")
+        
+        # Metode message 2
+        if len(message) > 0 :
+            print(f"{message}\n")
+
+
+        confirm: str = input("Masukkan 0 untuk keluar dari fitur : \n")
+
+        if confirm == '0' :
+            return -1
+        
+        elif len(confirm) > 0 and confirm != '0' :
+            message = "Input tidak valid"
+            
+            continue
+
+
+        print(read_amil())
+
+        data_baru = input("\nMasukkan NIK Amil : ")
+
+        data_search = read_amil(data_baru)
+
+        if data_search == -1 :
+            message = "Id yang dimasukkan tidak terdaftar!"
+
+            continue
+
+
+        # Insert Into Database
+        del_amil(data_baru)
+
+        message = "Berhasil menghapus Amil"
