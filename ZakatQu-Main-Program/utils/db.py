@@ -1,7 +1,7 @@
 import psycopg2
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='rendydp424', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -84,34 +84,53 @@ def searchPemberi(Input):
     else:
         return "Data Tidak Ada"
 
-def ReadData(id: str | int = ''):
+def read_pemberi(id: str = ''):
 
     search: str = ''
 
-    if type(id) == int :
+    if len(id) > 0 :
         search = f"WHERE id_pemberi_zakat = {id}"
 
-    cur.execute(f"SELECT * FROM pemberi_zakat {search}")
+    cur.execute(f"SELECT * FROM pemberi_zakat {search} ORDER BY id_pemberi_zakat")
     data=cur.fetchall()
-
-    for i in data:
-        print(str(i))
-
-def searchBentukZakat(Input):
-    cur.execute(f"SELECT * FROM bentuk_zakat where id_bentuk_zakat = '{Input}';")
-    data = cur.fetchall()
-    if data:
-        return data
-    else:
-        return "Data Tidak Ada"
     
-def searchJenisZakat(Input):
-    cur.execute(f"SELECT * FROM jenis_zakat where id_jenis_zakat = '{Input}';")
-    data = cur.fetchall()
-    if data:
+    if data :
         return data
-    else:
-        return "Data Tidak Ada"
+    
+def read_pembayaran(id: str = ''):
+
+    search: str = ''
+
+    if len(id) > 0 :
+        search = f"WHERE id_pembayaran = {id}"
+
+    cur.execute(f"SELECT * FROM pembayaran_zakat {search} ORDER BY id_pembayaran")
+    data=cur.fetchall()
+    
+    if data :
+        return data
+    
+def read_pembayaran_with_join(id: str = ''):
+
+    search: str = ''
+
+    if len(id) > 0 :
+        search = f"where pz.id_pembayaran = {id}"
+
+    cur.execute(f"""
+    select pz.id_pembayaran, pza.nama_pemberi_zakat, pz.besar_pemberian, to_char(pz.tanggal_pemberian, 'DD/MM/YY'), j.nama_jenis_zakat, b.nama_bentuk_zakat, a.nama_amil_zakat
+    from pembayaran_zakat pz join pemberi_zakat pza on (pz.id_pemberi_zakat = pza.id_pemberi_zakat)
+    join jenis_zakat j on (pz.id_jenis_zakat = j.id_jenis_zakat)
+    join bentuk_zakat b on (pz.id_bentuk_zakat = b.id_bentuk_zakat)
+    join amil_zakat a on (pz.id_amil_zakat = a.id_amil_zakat)
+    {search}
+    Order by pz.id_pembayaran
+                """)
+    data=cur.fetchall()
+    
+    if data :
+        return data
+
     
 def read_amil(nik: str = '') -> list[tuple] :
 
@@ -128,6 +147,11 @@ def read_amil(nik: str = '') -> list[tuple] :
         return data
     
     return -1
+
+def Update_data(NamaTabel, Query):
+    
+    cur.execute(f"UPDATE {NamaTabel} SET {Query}")
+    conn.commit()
 
 """Koneksi ke Penerima Zakat"""
 
