@@ -5,10 +5,15 @@ def amil(akun: str):
     tabel_data = "amil_zakat"
     kolom_data = 'nama_amil_zakat, nik, alamat, "RT/RW", nomor_telepon'
 
+    message: str = ''
+
     while akun == "Takmir" :
-        # clear_screen()
+        clear_screen()
 
         print("Halaman Amil\n")
+
+        if len(message) > 0 :
+            print(f"{message}\n")
 
         print(read_amil())
 
@@ -25,8 +30,24 @@ def amil(akun: str):
 
             case '3' :
                 hapus_amil(tabel_data, kolom_data)
+                
+            case '0' :
+                confirm: str = input("Masukkan 0 untuk keluar ke Halaman Utama : ")
 
-        input()
+                if confirm == '0' :
+                    break
+
+                elif len(confirm) > 0 and confirm != '0' :
+                    message = "Input tidak valid"
+
+                    continue
+
+            case _ :
+                message = "Input tidak valid"
+
+                continue
+        
+        message = ''
 
 
 
