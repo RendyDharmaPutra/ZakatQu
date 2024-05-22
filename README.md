@@ -3,4 +3,5 @@ Repository untuk semua kebutuhan projek Basis Data
 
 PIP Package :
 
-  1. psycopg2 
+  1. psycopg2
+  2. rich
