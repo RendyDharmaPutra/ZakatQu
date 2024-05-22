@@ -29,7 +29,7 @@ def amil(akun: str):
                 ubah_amil(tabel_data, kolom_data)
 
             case '3' :
-                hapus_amil(tabel_data, kolom_data)
+                hapus_amil()
                 
             case '0' :
                 confirm: str = input("Masukkan 0 untuk keluar ke Halaman Utama : ")
@@ -106,7 +106,7 @@ def ubah_amil() :
     
 
 
-def hapus_amil(tabel_data, kolom_data) :
+def hapus_amil() :
     message: str = ''
 
     while True :
