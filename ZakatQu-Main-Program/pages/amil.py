@@ -1,9 +1,4 @@
-from rich.console import Console
-from rich.table import Table
-from rich.text import Text
-from rich.progress import track
-
-from utils.db import del_amil, read_amil, QueryInput
+from utils.db import Update_data, del_amil, read_amil, QueryInput
 from utils.terminal import clear_screen
 from components.table import read_table
 
@@ -165,7 +160,7 @@ def ubah_amil(tabel_data, kolom_data) :
         # Debugging
         # print(data_baru)
 
-        input()
+        # input()
 
         if data_baru == -1 :
             message = "NIK yang dimasukkan tidak terdaftar!"
@@ -173,18 +168,25 @@ def ubah_amil(tabel_data, kolom_data) :
             continue
 
         
+        clear_screen()
+
+        read_table("Data Amil", data_baru)
+
+        data_baru = list(data_baru[0])
+        
         data_baru[1] = input("Masukkan Nama Amil : ") or data_baru[1]
         data_baru[2] = input("Masukkan NIK amil : ") or data_baru[2]
         data_baru[3] = input("Masukkan Alamat Rumah Amil : ") or data_baru[3]
         data_baru[4] = input("Masukkan RT/RW amil : ") or data_baru[4]
         data_baru[5] = input("Masukkan Nomor Telepon Amil : ") or data_baru[5]
 
+        print(data_baru)
 
 
         # Insert Into Database
-        QueryInput(data_baru, tabel_data, kolom_data)
-
-        message = "Berhasil menambah Amil"
+        Update_data(tabel_data, f"id_amil_zakat = {data_baru[0]}, nama_amil_zakat = '{data_baru[1]}', nik = '{data_baru[2]}', alamat = '{data_baru[3]}', \"RT/RW\" = '{data_baru[4]}', nomor_telepon =  {data_baru[5]} WHERE id_amil_zakat = {data_baru[0]}")
+        
+        message = "Berhasil mengubah Amil"
     
 
 
