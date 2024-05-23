@@ -1,15 +1,19 @@
 from utils.terminal import clear_screen
 from components.table import read_table
-from utils.db import conn, cur
+from utils.db import conn, cur, read_penerima_join, QueryInput
 
 def penerima():
+    
+    nama_tabel = 'penerima_zakat'
+    kolom_tabel = 'nama_kepala_keluarga,no_kk,alamat,"RT/RW",nomor_telepon'
     print("Halaman Penerima")
     read_table("Data Penerima", read_penerima_join())
     print('''1. Tambah Penerima \n2. Edit Penerima \n3. Hapus Penerima \n4. Kembali ke menu sebelumnya''')
+    
     Entry = int(input("Masukkan pilihan : "))
     match Entry:
         case 1:
-            Tambah_data_Penerima()
+            Tambah_data_Penerima(nama_tabel, kolom_tabel)
             input("Tekan Enter untuk kembali ke menu")
         case 2:
             Edit_data_Penerima()
@@ -21,28 +25,7 @@ def penerima():
             print("Kembali ke menu sebelumnya ?  ")
             input()
 
-"""Koneksi ke Penerima Zakat"""
-
-def read_penerima_join(no_kk : str = '', id : str = ''):
-    search: str = ''
-
-    if len(id) > 0 :
-        search = f"WHERE id_penerima_zakat = {id}"
-    elif len(no_kk) > 0 :
-        search = f"WHERE nik = '{no_kk}'"
-
-    cur.execute(f"""
-    select pz.id_penerima_zakat, pz.nama_kepala_keluarga, pz.no_kk, pz.alamat, pz."RT/RW", pz.nomor_telepon, sd.nama_status_distribusi
-    from penerima_zakat pz
-    join distribusi_zakat dz on pz.id_penerima_zakat = dz.id_penerima_zakat
-    join status_distribusi sd on dz.id_status_distribusi = sd.id_status_distribusi
-   {search} order by id_penerima_zakat
-    """)
-    data=cur.fetchall()
-    
-    if data :
-        return data
-    
+"""Koneksi ke Penerima Zakat"""    
     
 def Lihat_data_Penerima():
     cur.execute("Select * From penerima_zakat;")
@@ -50,18 +33,44 @@ def Lihat_data_Penerima():
     for i in data:
         print(i)
 
+def Tambah_data_Penerima(tabel_data, kolom_data) :
 
-def Tambah_data_Penerima():
-    nama_kepala_penerima = input("Masukkan nama penerima zakat : ")
-    noKK_penerima=input("Masukkan NIK penerima zakat : ")
-    alamat_penerima=input("Masukkan alamat penerima zakat : ")
-    RtRw_penerima=input("Masukkan RT/RW penerima zakat : ")
-    telepon_penerima= input("Masukkan nomor telepon penerima zakat : ")
 
-    query=f'INSERT INTO penerima_zakat(nama_kepala_keluarga,no_kk,alamat,"RT/RW",nomor_telepon) VALUES(%s,%s,%s,%s,%s)'
-    cur.execute(query,(nama_kepala_penerima,noKK_penerima,alamat_penerima,RtRw_penerima,telepon_penerima))
-    print("Data berhasil ditambahkan")
-    conn.commit()
+    message: str = ''
+
+    while True :
+        data_baru: list[str] = []
+        
+        
+        clear_screen()
+
+        print("Tambah Amil\n")
+        
+        # Metode message 2
+        if len(message) > 0 :
+            print(f"{message}\n")
+
+
+        confirm: str = input("Masukkan 0 untuk keluar dari fitur : ")
+
+        if confirm == '0' :
+            return -1
+        
+        elif len(confirm) > 0 and confirm != '0' :
+            message = "Input tidak valid"
+            
+            continue
+
+
+        data_baru.append(input("Masukkan nama penerima zakat : "))
+        data_baru.append(input("Masukkan NIK penerima zakat : "))
+        data_baru.append(input("Masukkan alamat penerima zakat : "))
+        data_baru.append(input("Masukkan RT/RW penerima zakat : "))
+        data_baru.append(input("Masukkan nomor telepon penerima zakat : "))
+
+        QueryInput(data_baru, tabel_data, kolom_data)
+
+        message = "Berhasil menambah Amil"
 
 def Edit_data_Penerima():
     Lihat_data_Penerima()

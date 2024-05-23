@@ -118,4 +118,24 @@ def del_amil(nik: str) :
     
     cur.execute(f"DELETE FROM amil_zakat WHERE nik = '{nik}'")
     conn.commit()
+    
+def read_penerima_join(no_kk : str = '', id : str = ''):
+    search: str = ''
 
+    if len(id) > 0 :
+        search = f"WHERE id_penerima_zakat = {id}"
+    elif len(no_kk) > 0 :
+        search = f"WHERE nik = '{no_kk}'"
+
+    cur.execute(f"""select* from penerima_zakat {search} order by id_penerima_zakat""")
+    data=cur.fetchall()
+    
+    if data :
+        return data
+
+
+
+    # select pz.id_penerima_zakat, pz.nama_kepala_keluarga, pz.no_kk, pz.alamat, pz."RT/RW", pz.nomor_telepon, sd.nama_status_distribusi
+    # from penerima_zakat pz
+    # join distribusi_zakat dz on pz.id_penerima_zakat = dz.id_penerima_zakat
+    # join status_distribusi sd on dz.id_status_distribusi = sd.id_status_distribusi

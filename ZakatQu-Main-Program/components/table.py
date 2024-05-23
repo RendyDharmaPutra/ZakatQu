@@ -12,7 +12,7 @@ def read_table(table_title, datas) :
         case "Data Pemberi":
             column = ['ID Pemberi', 'Nama Pemberi', 'NIK', 'Alamat', 'Nomor Telepon', 'RT/RW', 'Status Pembayaran']
         case "Data Penerima":
-            column = ['ID Penerima', 'Nama Penerima', 'NO.KK', 'Alamat', 'RT/RW', 'Nomor Telepon', 'Status Distribusi']
+            column = ['ID Penerima', 'Nama Penerima', 'NO.KK', 'Alamat', 'RT/RW', 'Nomor Telepon']
 
 
     console = Console()
@@ -34,6 +34,9 @@ def read_table(table_title, datas) :
     if table_title == "Data Amil" :
         for data in datas : 
             table.add_row(str(data[0]),data[1], data[2], data[-1])
+    elif table_title == "Data Penerima":
+        for data in datas :
+            table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]))
     else :
         for data in datas :
             table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]), str(data[6]))
