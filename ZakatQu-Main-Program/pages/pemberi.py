@@ -1,10 +1,7 @@
 from utils.terminal import clear_screen
 from utils.db import read_pemberi
-# from utils.db import Tambah_data_Pemberi
-# from utils.db import Edit_data_Pemberi
-# from utils.db import Hapus_data_Pemberi
 from components.table import read_table
-from utils.db import cur,conn
+from utils.db import cur, conn
 from utils.db import QueryInput
 from utils.db import Delete_data
 from utils.db import Update_data
@@ -164,7 +161,7 @@ def Hapus_data_Pemberi(KolomPemberi,Pemberi):
         read_table("Data Pemberi", read_pemberi())
         idPemberi = input('Masukkan id Pemberi yang ingin dihapus: ')
         Konfirmasi=input(f"Apakah anda yakin untuk menghapus Data nomor {idPemberi}?[y/n]")
-        
+
         if Konfirmasi!='y':
             continue
 

@@ -88,6 +88,23 @@ CREATE TABLE status_pembayaran_zakat (
 
 ALTER TABLE status_pembayaran_zakat ADD CONSTRAINT status_pembayaran_zakat_pk PRIMARY KEY ( id_status_pembayaran_zakat );
 
+CREATE TABLE detail_distribusi_zakat (
+    id_detail_distribusi                 INTEGER NOT NULL,
+    jumlah_zakat                         INTEGER NOT NULL, 
+    id_distribusi_zakat                  INTEGER NOT NULL,
+    id_bentuk_zakat         INTEGER NOT NULL
+);
+
+ALTER TABLE detail_distribusi_zakat ADD CONSTRAINT detail_distribusi_zakat_pk PRIMARY KEY ( id_detail_distribusi );
+
+ALTER TABLE detail_distribusi_zakat
+    ADD CONSTRAINT detail_distribusi_zakat_bentuk_zakat_fk FOREIGN KEY ( id_bentuk_zakat )
+        REFERENCES bentuk_zakat ( id_bentuk_zakat );
+
+ALTER TABLE detail_distribusi_zakat
+    ADD CONSTRAINT detail_distribusi_zakat_distribusi_zakat_fk FOREIGN KEY ( id_distribusi_zakat )
+        REFERENCES distribusi_zakat ( id_distribusi_zakat );
+
 ALTER TABLE distribusi_zakat
     ADD CONSTRAINT distribusi_zakat_amil_zakat_fk FOREIGN KEY ( id_amil_zakat )
         REFERENCES amil_zakat ( id_amil_zakat );
