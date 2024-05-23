@@ -224,7 +224,7 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
             if Konfirmasi.lower() == "0":
                 continue
             else:
-                DataTerpanggil = read_pembayaran(InputIdPembayaran,'')
+                DataTerpanggil = read_pembayaran(InputIdPembayaran)
         else:
             Konfirmasi = "Data tidak ditemukan"
             continue
