@@ -209,6 +209,8 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
             
         InputIdPembayaran = input("Masukkan Id Pembayaran : ")
         DataTerpanggil = read_pembayaran_with_join(InputIdPembayaran,'')
+        print(DataTerpanggil)
+        input()
         if DataTerpanggil:
             print('Data saat ini:')
             print(f'id pembayaran zakat saat ini : {DataTerpanggil[0][0]}')

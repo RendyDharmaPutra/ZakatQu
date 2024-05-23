@@ -1,6 +1,6 @@
 from utils.terminal import clear_screen
 from components.table import read_table
-from utils.db import conn, cur, read_penerima_join, QueryInput
+from utils.db import conn, cur, read_penerima_join, QueryInput,Update_data, Delete_data
 
 def penerima():
     
@@ -37,15 +37,13 @@ def Lihat_data_Penerima(no_kk: str = ''):
     search : str = ''
 
     if len(no_kk) > 0 :
-        search = f"WHERE no_kk = '{search}'"
+        search = f"WHERE id_penerima_zakat = {no_kk}"
 
     cur.execute(f"SELECT * FROM penerima_zakat {search}")
     data = cur.fetchall() 
 
     if data :
         return data
-    
-    return -1
 
 
 
@@ -112,7 +110,10 @@ def Edit_data_Penerima(tabel_data, kolom_data):
 
         read_table("Data Penerima", Lihat_data_Penerima())
 
-        data_baru = Lihat_data_Penerima(input("Masukkan id penerima yang ingin diubah : "))
+        IdDipilih = input("Masukkan id penerima yang ingin diubah : ")
+        data_baru = Lihat_data_Penerima(IdDipilih)[0]
+        print(data_baru)
+        input()
 
         input()
 
@@ -120,15 +121,20 @@ def Edit_data_Penerima(tabel_data, kolom_data):
             message = "id penerima yang dimasukkan tidak terdaftar!"
             continue
 
-        data_baru[1] = input("Masukkan nama penerima yang baru : ") or data_baru[1]
-        data_baru[2] = input("Masukkan no KK yang baru : ") or data_baru[2]
-        data_baru[3] = input("Masukkan alamat yang baru : ") or data_baru[3]
-        data_baru[4] = input("Masukkan RT/RW yang baru : ") or data_baru[4]
-        data_baru[5] = input("Masukkan nomor telepon yang baru : ") or data_baru[5]
+        NamaPenerima = input("Masukkan nama penerima yang baru : ") or data_baru[1]
+        NoKK = input("Masukkan no KK yang baru : ") or data_baru[2]
+        Alamat = input("Masukkan alamat yang baru : ") or data_baru[3]
+        RtRw = input("Masukkan RT/RW yang baru : ") or data_baru[4]
+        Telepon = input("Masukkan nomor telepon yang baru : ") or data_baru[5]
 
-        # Insert Into Database
-        QueryInput(data_baru, tabel_data, kolom_data)
+        Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
         
+        if Konfirmasi.lower() == "0":
+            pemberi()
+        
+        else:
+            Update_data('penerima_zakat',f"nama_kepala_keluarga='{NamaPenerima}',no_kk='{NoKK}',alamat='{Alamat}',\"RT/RW\"='{RtRw}',nomor_telepon='{Telepon}' WHERE id_penerima_zakat={IdDipilih}")
+                    
         message = "Berhasil mengubah data penerima"
 
 # def Hapus_data_Penerima():
@@ -164,9 +170,7 @@ def Hapus_data_Penerima(tabel_data, kolom_data):
         if idPenerima == -1:
             message = "id penerima yang dimasukkan tidak terdaftar!"
             continue
-
-        query_delete = f"DELETE FROM penerima_zakat WHERE id_penerima_zakat = {idPenerima}"
-        cur.execute(query_delete)
-        conn.commit()
+        
+        Delete_data(tabel_data,"id_penerima_zakat",idPenerima)
 
         message = "Berhasil menghapus data penerima"
