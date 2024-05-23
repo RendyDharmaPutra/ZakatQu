@@ -124,8 +124,8 @@ def tambah_amil(tabel_data, kolom_data) :
 
 
         # Insert Into Database
-        for i in track(range(100), description="Menambah Data...") :
-            QueryInput(data_baru, tabel_data, kolom_data)
+        # for i in track(range(100), description="Menambah Data...") :
+        QueryInput(data_baru, tabel_data, kolom_data)
 
         message = "Berhasil menambah Amil"
 
@@ -158,18 +158,27 @@ def ubah_amil(tabel_data, kolom_data) :
             continue
 
 
-        print(read_amil())
+        read_table("Data Amil", read_amil())
 
-        data_search = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))[2]
+        data_baru = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))
 
-        print(data_search)
+        # Debugging
+        # print(data_baru)
 
         input()
 
-        if data_search != -1 :
-            message = "NIK yang dimasukkan sudah terdaftar!"
+        if data_baru == -1 :
+            message = "NIK yang dimasukkan tidak terdaftar!"
 
             continue
+
+        
+        data_baru[1] = input("Masukkan Nama Amil : ") or data_baru[1]
+        data_baru[2] = input("Masukkan NIK amil : ") or data_baru[2]
+        data_baru[3] = input("Masukkan Alamat Rumah Amil : ") or data_baru[3]
+        data_baru[4] = input("Masukkan RT/RW amil : ") or data_baru[4]
+        data_baru[5] = input("Masukkan Nomor Telepon Amil : ") or data_baru[5]
+
 
 
         # Insert Into Database
