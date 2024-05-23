@@ -7,7 +7,6 @@ from components.table import read_table
 from utils.db import cur,conn
 from utils.db import QueryInput
 
-
 def pemberi():
     KolomPemberi='nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat'
     Pemberi='pemberi_zakat'
@@ -22,72 +21,126 @@ def pemberi():
         case '1':
             Tambah_data_Pemberi(KolomPemberi,Pemberi)
         case '2':
-            Edit_data_Pemberi()
+            Edit_data_Pemberi(KolomPemberi,Pemberi)
         case '3':
             Hapus_data_Pemberi()
+        case'0':
+            print('Apakah anda yakin untuk kembali?')
+            input()
+            return -1
         case _:
             print("Input tidak valid")
 
 
 def Tambah_data_Pemberi(KolomPemberi,Pemberi):
-    query_input=[]
-    nama_pemberi = input("Masukkan nama pemberi zakat : ")
-    nik_pemberi=input("Masukkan NIK pemberi zakat : ")
-    alamat_pemberi=input("Masukkan alamat pemberi zakat : ")
-    RtRw_pemberi=input("Masukkan RT/RW pemberi zakat : ")
-    telepon_pemberi= input("Masukkan nomor telepon pemberi zakat : ")
-    status_bayar=2
+    msg=''
+    while True:
+        query_input=[]
 
-    query_input.append(f'{nama_pemberi}')
-    query_input.append(f'{nik_pemberi}')
-    query_input.append(f'{alamat_pemberi}')
-    query_input.append(f'{RtRw_pemberi}')
-    query_input.append(f'{telepon_pemberi}')
-    query_input.append(status_bayar)
 
-    Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
+        clear_screen()
+
+        print("Tambah Daftar Pemberi")
+
+        if len(msg) > 0:
+            print(msg)
+
+        Konfirmasi=input("Ketik 0 untuk kembali, [enter] untuk lanjut : ")
+
+        if Konfirmasi=='0':
+            pemberi()
+
+        elif len(Konfirmasi) > 0 and Konfirmasi != '0':
+            msg = "Input tidak valid"   
+            continue
+
+
+        nama_pemberi = input("Masukkan nama pemberi zakat : ")
+        nik_pemberi=input("Masukkan NIK pemberi zakat : ")
+        alamat_pemberi=input("Masukkan alamat pemberi zakat : ")
+        RtRw_pemberi=input("Masukkan RT/RW pemberi zakat : ")
+        telepon_pemberi= input("Masukkan nomor telepon pemberi zakat : ")
+        status_bayar=2
+
+        query_input.append(f'{nama_pemberi}')
+        query_input.append(f'{nik_pemberi}')
+        query_input.append(f'{alamat_pemberi}')
+        query_input.append(f'{RtRw_pemberi}')
+        query_input.append(f'{telepon_pemberi}')
+        query_input.append(status_bayar)
+
+        Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
+        
+        if Konfirmasi.lower() == "0":
+            pemberi()
+        
+        else:
+            QueryInput(query_input,Pemberi,KolomPemberi)
+            print("Data Berhasil Disimpan")
+
+        return nik_pemberi
     
-    if Konfirmasi.lower() == "0":
-        pemberi()
-    
-    else:
-        QueryInput(query_input,Pemberi,KolomPemberi)
-        print("Data Berhasil Disimpan")
 
-    return nik_pemberi
-    
+def Edit_data_Pemberi(KolomPemberi,Pemberi):
+    msg=''
+    while True:
+        query_update=f'UPDATE {Pemberi} SET nama_pemberi_zakat=%s,nik=%s,alamat=%s,"RT/RW"=%s,nomor_telepon=%s,id_status_pembayaran_zakat=%s WHERE id_pemberi_zakat=%s'
+        
+        clear_screen()
 
-def Edit_data_Pemberi():
-    read_Daftar_Pemberi()
-    id_dipilih=(input("Masukkan id pemberi yang ingin di edit : "))
-    select_query=f"SELECT * FROM  pemberi_zakat WHERE id_pemberi_zakat ={id_dipilih}"
-    cur.execute(select_query,(id_dipilih))
-    data2=cur.fetchone()
+        print("Edit Daftar Pemberi")
 
-    if data2:
-        print('Data saat ini:')
-        print(f'id pemberi zakat saat ini : {data2[0]}')
-        print(f'nama pemberi zakat saat ini: {data2[1]}')
-        print(f'nik pemberi zakat saat ini: {data2[2]}')
-        print(f'alamat pemberi zakat saat ini: {data2[3]}')
-        print(f'RT/RW pemberi zakat saat ini: {data2[4]}')
-        print(f'nomor telepon pemberi zakat saat ini: {data2[5]}')
-        print(f'status pembayaran saat ini : {data2[6]}')
+        if len(msg) > 0:
+            print(msg)
 
-    nama_pemberi = input(f"Masukkan nama pemberi yang baru : ") or data2[1]
-    nik = input(f"Masukkan nik yang baru : ") or data2[2]
-    alamat= input(f"Masukkan alamat yang baru : ") or data2[3]
-    RtRW = input(f"Masukkan RT/RW yang baru : ") or data2[4]
-    telepon = input(f"Masukkan nomor telepon yang baru : ") or data2[5]
-    statusBayar= input(f"Masukkan status pembayaran yang baru : ") or data2[6]
-    statusBayar=int(statusBayar)
+        Konfirmasi=input("Ketik 0 untuk kembali, [enter] untuk lanjut : ")
 
-    queryUpdate=f'UPDATE pemberi_zakat SET nama_pemberi_zakat = %s,nik= %s,alamat =%s,"RT/RW"=%s,nomor_telepon=%s,id_status_pembayaran_zakat=%s WHERE id_pemberi_zakat = %s'
-    cur.execute(queryUpdate,(nama_pemberi,nik,alamat,RtRW,telepon,statusBayar,id_dipilih))
-    print("Data berhasil diperbarui")
+        if Konfirmasi=='0':
+            pemberi()
+
+        elif len(Konfirmasi) > 0 and Konfirmasi != '0':
+            msg = "Input tidak valid"   
+            continue
+
+        read_table("Data Pemberi", read_pemberi())
+
+        id_dipilih=(input("Masukkan id pemberi yang ingin di edit : "))
+        select_query=f"SELECT * FROM  pemberi_zakat WHERE id_pemberi_zakat ={id_dipilih}"
+        cur.execute(select_query,(id_dipilih))
+        data2=cur.fetchone()
+
+        if data2:
+            print('Data saat ini:')
+            print(f'id pemberi zakat saat ini : {data2[0]}')
+            print(f'nama pemberi zakat saat ini: {data2[1]}')
+            print(f'nik pemberi zakat saat ini: {data2[2]}')
+            print(f'alamat pemberi zakat saat ini: {data2[3]}')
+            print(f'RT/RW pemberi zakat saat ini: {data2[4]}')
+            print(f'nomor telepon pemberi zakat saat ini: {data2[5]}')
+            print(f'status pembayaran saat ini : {data2[6]}')
+
+        nama_pemberi = input(f"Masukkan nama pemberi yang baru : ") or data2[1]
+        nik = input(f"Masukkan nik yang baru : ") or data2[2]
+        alamat= input(f"Masukkan alamat yang baru : ") or data2[3]
+        RtRW = input(f"Masukkan RT/RW yang baru : ") or data2[4]
+        telepon = input(f"Masukkan nomor telepon yang baru : ") or data2[5]
+        statusBayar=2
+
+
+        Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
+        
+        if Konfirmasi.lower() == "0":
+            pemberi()
+        
+        else:
+            cur.execute(query_update,(nama_pemberi,nik,alamat,RtRW,telepon,statusBayar,id_dipilih))
+            conn.commit()
+            msg="Data Berhasil Diubah"
+
+        return nik
 
 def Hapus_data_Pemberi():
-    read_Daftar_Pemberi()
+    read_table("Data Pemberi", read_pemberi())
     idPemberi = input('Masukkan id mata kuliah yang ingin dihapus: ')
     query_delete = f"DELETE FROM mata_kuliah WHERE id_mata_kuliah = {idPemberi}"
     cur.execute(query_delete)
