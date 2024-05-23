@@ -1,6 +1,7 @@
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
+from rich.progress import track
 
 from utils.db import del_amil, read_amil, QueryInput
 from utils.terminal import clear_screen
@@ -123,7 +124,8 @@ def tambah_amil(tabel_data, kolom_data) :
 
 
         # Insert Into Database
-        QueryInput(data_baru, tabel_data, kolom_data)
+        for i in track(range(100), description="Menambah Data...") :
+            QueryInput(data_baru, tabel_data, kolom_data)
 
         message = "Berhasil menambah Amil"
 
