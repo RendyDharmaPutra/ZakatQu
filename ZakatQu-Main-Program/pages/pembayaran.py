@@ -7,16 +7,18 @@ from utils.db import read_pembayaran
 from utils.db import read_pembayaran_with_join
 from utils.db import Update_data
 from utils.terminal import clear_screen
+from utils.db import Tambah_data_Pemberi
+from components.table import read_table
 
 from datetime import date
 
 def pembayaran(akun):
     NamaTabel = 'pembayaran_zakat'
-    NamaKolom = 'besar_pemberian, tanggal_pemberian, id_amil_zakat, id_pemberi_zakat, id_bentuk_zakat, id_jenis_zakat'
+    NamaKolom = 'Besar_Pemberian, Tanggal_Pemberian, ID_Amil_Zakat, ID_pemberi_zakat, ID_Bentuk_Zakat, ID_Jenis_Zakat'
 
     print("Halaman Pemberi")
-    for i in read_pembayaran():
-        print(i)
+    
+    read_table("Data Pembayaran Zakat", read_pembayaran_with_join())
     
     print("Tambah[1], Edit[2], Hapus[3], Kembali[0]")
     InputPengguna = input("Masukkan fitur yang dipilih : ")
@@ -32,7 +34,7 @@ def pembayaran(akun):
         case '0':
             print("Apakah Yakin Untu Kembali ?")
             input()
-            return
+            return -1
           
 def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
     
@@ -52,7 +54,7 @@ def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
         Konfirmasi = input("Masukkan 0 untuk keluar dari fitur : ")
         
         if Konfirmasi == '0':
-            return -1
+            pembayaran(akun)
         
         elif len(Konfirmasi) > 0 and Konfirmasi != '0':
             Notifikasi = "Input tidak valid"
@@ -85,13 +87,20 @@ def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
 def InputNamaPemberi():
     
     
-    for i in read_pemberi():
-        print(i)
+    read_table("Data Pemberi", read_pemberi())
     
     
+    print("Ketik 0 Jika Data Pemberi Tidak Ada")
     InputIdPemberi = input("Masukkan Id Pemberi Zakat : ")
     
-    return read_pemberi(InputIdPemberi)[0][0]
+    match InputIdPemberi:
+        case '0':
+            Nik = Tambah_data_Pemberi()
+            return read_pemberi('',Nik)[0][0]
+            
+        case _:
+            return read_pemberi(InputIdPemberi,'')[0][0]
+    
 
 def InputKeteranganZakat():
     
@@ -173,15 +182,14 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
         Konfirmasi = input("Masukkan 0 untuk keluar dari fitur : ")
         
         if Konfirmasi == '0':
-            return -1
+            pembayaran(akun)
         
         elif len(Konfirmasi) > 0 and Konfirmasi != '0':
             Notifikasi = "Input tidak valid"
             
             continue
         
-        for i in read_pembayaran_with_join():
-            print(i)
+        read_table("Data Pembayaran Zakat", read_pembayaran_with_join())
             
         InputIdPembayaran = input("Masukkan Id Pembayaran : ")
         DataTerpanggil = read_pembayaran_with_join(InputIdPembayaran)

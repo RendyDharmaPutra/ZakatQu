@@ -1,7 +1,7 @@
 import psycopg2
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='rendydp424', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -34,7 +34,11 @@ def Tambah_data_Pemberi():
 
     query=f'INSERT INTO pemberi_zakat(nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat) VALUES(%s,%s,%s,%s,%s,%s)'
     cur.execute(query,(nama_pemberi,nik_pemberi,alamat_pemberi,RtRw_pemberi,telepon_pemberi,status_bayar))
+    conn.commit()
     print("Data berhasil ditambahkan")
+    input()
+    return nik_pemberi
+    
 
 def Edit_data_Pemberi():
     read_Daftar_Pemberi()
@@ -84,14 +88,20 @@ def searchPemberi(Input):
     else:
         return "Data Tidak Ada"
 
-def read_pemberi(id: str = ''):
+def read_pemberi(id: str = '', nik: str = ''):
 
     search: str = ''
 
     if len(id) > 0 :
         search = f"WHERE id_pemberi_zakat = {id}"
+    elif len(nik) > 0 :
+        search = f"WHERE nik = '{nik}'"
 
-    cur.execute(f"SELECT * FROM pemberi_zakat {search} ORDER BY id_pemberi_zakat")
+    cur.execute(f"""
+    select p.id_pemberi_zakat, p.nama_pemberi_zakat, p.nik, p.alamat, p."RT/RW", p.nomor_telepon, pz.nama_pembayaran_zakat
+    from pemberi_zakat p join status_pembayaran_zakat pz on (p.id_status_pembayaran_zakat = pz.id_status_pembayaran_zakat)
+    {search} ORDER BY id_pemberi_zakat
+    """)
     data=cur.fetchall()
     
     if data :
