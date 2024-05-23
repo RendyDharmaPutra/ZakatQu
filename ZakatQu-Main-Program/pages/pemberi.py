@@ -1,10 +1,7 @@
 from utils.terminal import clear_screen
 from utils.db import read_pemberi
-# from utils.db import Tambah_data_Pemberi
-# from utils.db import Edit_data_Pemberi
-# from utils.db import Hapus_data_Pemberi
 from components.table import read_table
-from utils.db import cur,conn
+from utils.db import cur, conn
 from utils.db import QueryInput
 
 
