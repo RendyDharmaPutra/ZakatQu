@@ -1,7 +1,7 @@
 import psycopg2
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='12345678', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -170,6 +170,27 @@ def Update_data(NamaTabel, Query):
 
 """Koneksi ke Penerima Zakat"""
 
+def read_penerima_join(no_kk : str = '', id : str = ''):
+    search: str = ''
+
+    if len(id) > 0 :
+        search = f"WHERE id_penerima_zakat = {id}"
+    elif len(no_kk) > 0 :
+        search = f"WHERE nik = '{no_kk}'"
+
+    cur.execute(f"""
+    select pz.id_penerima_zakat, pz.nama_kepala_keluarga, pz.no_kk, pz.alamat, pz."RT/RW", pz.nomor_telepon, sd.nama_status_distribusi
+    from penerima_zakat pz
+    join distribusi_zakat dz on pz.id_penerima_zakat = dz.id_penerima_zakat
+    join status_distribusi sd on dz.id_status_distribusi = sd.id_status_distribusi
+   {search} order by id_penerima_zakat
+    """)
+    data=cur.fetchall()
+    
+    if data :
+        return data
+    
+
 def Tambah_data_Penerima():
     nama_kepala_penerima = input("Masukkan nama penerima zakat : ")
     noKK_penerima=input("Masukkan NIK penerima zakat : ")
@@ -181,6 +202,7 @@ def Tambah_data_Penerima():
     cur.execute(query,(nama_kepala_penerima,noKK_penerima,alamat_penerima,RtRw_penerima,telepon_penerima))
     print("Data berhasil ditambahkan")
     conn.commit()
+    
 def Lihat_data_Penerima():
     cur.execute("Select * From penerima_zakat;")
     data=cur.fetchall()
