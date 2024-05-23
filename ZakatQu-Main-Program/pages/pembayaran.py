@@ -7,7 +7,7 @@ from utils.db import read_pembayaran_with_join
 from utils.db import Update_data
 from utils.db import Delete_data
 from utils.terminal import clear_screen
-from utils.db import Tambah_data_Pemberi
+# from utils.db import Tambah_data_Pemberi
 from components.table import read_table
 
 from datetime import date
