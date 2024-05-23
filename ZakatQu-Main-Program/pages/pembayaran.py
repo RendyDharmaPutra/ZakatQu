@@ -1,13 +1,12 @@
 from utils.db import conn, cur
-from utils.db import searchPemberi
 from utils.db import QueryInput
 from utils.db import read_pemberi
 from utils.db import read_pembayaran
 from utils.db import read_pembayaran_with_join
 from utils.db import Update_data
 from utils.db import Delete_data
-from utils.terminal import clear_screen
 from utils.db import Tambah_data_Pemberi
+from utils.terminal import clear_screen
 from components.table import read_table
 
 from datetime import date
@@ -373,6 +372,8 @@ def Hapus_pembayaran(akun):
         except:
             Notifikasi = "Data Tidak Ditemukan"
             continue
+        
+        Notifikasi = "Data Telah Dihapus"
 
         
         
