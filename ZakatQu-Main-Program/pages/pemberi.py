@@ -6,6 +6,8 @@ from utils.db import read_pemberi
 from components.table import read_table
 from utils.db import cur,conn
 from utils.db import QueryInput
+from utils.db import Delete_data
+from utils.db import Update_data
 
 def pemberi():
     KolomPemberi='nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat'
@@ -23,7 +25,7 @@ def pemberi():
         case '2':
             Edit_data_Pemberi(KolomPemberi,Pemberi)
         case '3':
-            Hapus_data_Pemberi()
+            Hapus_data_Pemberi(KolomPemberi,Pemberi)
         case'0':
             print('Apakah anda yakin untuk kembali?')
             input()
@@ -84,8 +86,8 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
 def Edit_data_Pemberi(KolomPemberi,Pemberi):
     msg=''
     while True:
-        query_update=f'UPDATE {Pemberi} SET nama_pemberi_zakat=%s,nik=%s,alamat=%s,"RT/RW"=%s,nomor_telepon=%s,id_status_pembayaran_zakat=%s WHERE id_pemberi_zakat=%s'
         
+
         clear_screen()
 
         print("Edit Daftar Pemberi")
@@ -133,15 +135,38 @@ def Edit_data_Pemberi(KolomPemberi,Pemberi):
             pemberi()
         
         else:
-            cur.execute(query_update,(nama_pemberi,nik,alamat,RtRW,telepon,statusBayar,id_dipilih))
-            conn.commit()
+            Update_data(Pemberi,f"nama_pemberi_zakat='{nama_pemberi}',nik='{nik}',alamat='{alamat}',\"RT/RW\"='{RtRW}',nomor_telepon='{telepon}',id_status_pembayaran_zakat={statusBayar} WHERE id_pemberi_zakat={id_dipilih}")
             msg="Data Berhasil Diubah"
 
         return nik
 
-def Hapus_data_Pemberi():
-    read_table("Data Pemberi", read_pemberi())
-    idPemberi = input('Masukkan id mata kuliah yang ingin dihapus: ')
-    query_delete = f"DELETE FROM mata_kuliah WHERE id_mata_kuliah = {idPemberi}"
-    cur.execute(query_delete)
-    print("Data berhasil dihapus")
+def Hapus_data_Pemberi(KolomPemberi,Pemberi):
+    msg=''
+    while True:
+        
+
+        clear_screen()
+
+        print("Hapus Data Pemberi")
+
+        if len(msg) > 0:
+            print(msg)
+
+        Konfirmasi=input("Ketik 0 untuk kembali, [enter] untuk lanjut : ")
+
+        if Konfirmasi=='0':
+            pemberi()
+
+        elif len(Konfirmasi) > 0 and Konfirmasi != '0':
+            msg = "Input tidak valid"   
+            continue
+
+        read_table("Data Pemberi", read_pemberi())
+        idPemberi = input('Masukkan id Pemberi yang ingin dihapus: ')
+        Konfirmasi=input(f"Apakah anda yakin untuk menghapus Data nomor {idPemberi}?[y/n]")
+        
+        if Konfirmasi!='y':
+            continue
+
+        Delete_data(Pemberi,"id_pemberi_zakat",idPemberi)
+        msg="Data Berhasil Dihapus"
