@@ -1,11 +1,11 @@
 from utils.db import conn, cur
 from utils.db import searchPemberi
 from utils.db import QueryInput
-from utils.db import UpdatePemberi
 from utils.db import read_pemberi
 from utils.db import read_pembayaran
 from utils.db import read_pembayaran_with_join
 from utils.db import Update_data
+from utils.db import Delete_data
 from utils.terminal import clear_screen
 from utils.db import Tambah_data_Pemberi
 from components.table import read_table
@@ -80,27 +80,42 @@ def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
         
         else:
             QueryInput(InputQuery, NamaTabel, NamaKolom)
-            UpdatePemberi(NamaPemberi)
+            Update_data('pemberi_zakat', f"id_status_pembayaran_zakat = 1 where id_pemberi_zakat = '{NamaPemberi}'")
             Notifikasi = "Data Sudah Disimpan"
 
 
-def InputNamaPemberi():
+def InputNamaPemberi(Kondisi: str = ''):
     
     
     read_table("Data Pemberi", read_pemberi())
     
     
     print("Ketik 0 Jika Data Pemberi Tidak Ada")
-    InputIdPemberi = input("Masukkan Id Pemberi Zakat : ")
     
-    match InputIdPemberi:
-        case '0':
-            Nik = Tambah_data_Pemberi()
-            return read_pemberi('',Nik)[0][0]
+    match Kondisi:
+        case '':
+            Counter = 0
+            while Counter < 2:
+                InputIdPemberi = input("Masukkan Id Pemberi Zakat : ")
+                match InputIdPemberi:
+                    case '':
+                        print("InputSalah")
+                        Counter += 1
+                    case '0':
+                        Nik = Tambah_data_Pemberi()
+                        return read_pemberi('',Nik)[0][0]
+                    case _:
+                        return read_pemberi(InputIdPemberi,'')[0][0]
+        case 'Update':
+            InputIdPemberi = input("Masukkan Id Pemberi Zakat : ")
+            match InputIdPemberi:
+                case '0':
+                    Nik = Tambah_data_Pemberi()
+                    return read_pemberi('',Nik)[0][0]
+                case _:
+                    return read_pemberi(InputIdPemberi,'')[0][0]
             
-        case _:
-            return read_pemberi(InputIdPemberi,'')[0][0]
-    
+    pembayaran(akun)
 
 def InputKeteranganZakat():
     
@@ -109,7 +124,7 @@ def InputKeteranganZakat():
     
     InputJenisZakat = input("Masukkan Jenis Zakat : ")
     
-    
+    Counter1, Counter2 = 0, 0
     while InputJenisZakat:
         
         match InputJenisZakat:
@@ -127,14 +142,15 @@ def InputKeteranganZakat():
                         
                         case "1":
                             JumlahZakat = int(input("Masukkan Jumlah dalam Gram (Gr): "))
-                            break
+                            return InputJenisZakat, InputBentukZakat, JumlahZakat
                         
                         case "2":
                             JumlahZakat = int(input("Masukkan Jumlah dalam Ribuan (Rp): "))
-                            break
+                            return InputJenisZakat, InputBentukZakat, JumlahZakat
                         
                         case _:
                             print("InputSalah")
+                            Counter2 += 1
                 break
             
             case "2":
@@ -150,21 +166,22 @@ def InputKeteranganZakat():
                         
                         case "2":
                             JumlahZakat = int(input("Masukkan Jumlah dalam Ribuan (Rp): "))
-                            break
+                            return InputJenisZakat, InputBentukZakat, JumlahZakat
                         
                         case "3":
                             JumlahZakat = int(input("Masukkan Jumlah dalam Gram (Gr): "))
-                            break
+                            return InputJenisZakat, InputBentukZakat, JumlahZakat
                         
                         case _:
                             print("InputSalah")
+                            Counter2 += 1
                             
                 break
             
             case _:
                 print("InputSalah")
-                
-    return InputJenisZakat, InputBentukZakat, JumlahZakat
+                Counter1 += 1
+    pembayaran()
 
 def Edit_pembayaran(akun, NamaTabel, NamaKolom):
     
@@ -192,7 +209,7 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
         read_table("Data Pembayaran Zakat", read_pembayaran_with_join())
             
         InputIdPembayaran = input("Masukkan Id Pembayaran : ")
-        DataTerpanggil = read_pembayaran_with_join(InputIdPembayaran)
+        DataTerpanggil = read_pembayaran_with_join(InputIdPembayaran,'')
         if DataTerpanggil:
             print('Data saat ini:')
             print(f'id pembayaran zakat saat ini : {DataTerpanggil[0][0]}')
@@ -208,22 +225,20 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
             if Konfirmasi.lower() == "0":
                 continue
             else:
-                DataTerpanggil = read_pembayaran(InputIdPembayaran)
+                DataTerpanggil = read_pembayaran(InputIdPembayaran,'')
         else:
             Konfirmasi = "Data tidak ditemukan"
             continue
         
         
         # [(26, 2500, datetime.date(2024, 5, 21), 1, (3), 1, 1)]
-        Id_Pemberi = InputNamaPemberi() or DataTerpanggil[0][4]
+        Id_Pemberi = InputNamaPemberi("Update") or DataTerpanggil[0][4]
         Jenis_Zakat = UpdateJenisZakat() or DataTerpanggil[0][6]
         Bentuk_Zakat = UpdateBentukZakat(Jenis_Zakat) or DataTerpanggil[0][5]
         Jumlah_Pemberian = UpdateJumlahZakat(Bentuk_Zakat) or DataTerpanggil[0][1]
         
         
-        Query = f"id_pemberi_zakat = {Id_Pemberi}, id_jenis_zakat = {Jenis_Zakat}, id_bentuk_zakat = {Bentuk_Zakat}, besar_pemberian = {Jumlah_Pemberian} where id_pembayaran = {InputIdPembayaran}"
-        
-        Update_data(NamaTabel, Query)
+        Update_data(NamaTabel, f"id_pemberi_zakat = {Id_Pemberi}, id_jenis_zakat = {Jenis_Zakat}, id_bentuk_zakat = {Bentuk_Zakat}, besar_pemberian = {Jumlah_Pemberian} where id_pembayaran = {InputIdPembayaran}")
         
         Notifikasi = "Data Berhasil Diubah"
         
@@ -320,22 +335,45 @@ def UpdateJenisZakat():
             case _:
                 Notifikasi = "Input tidak valid"
                 continue
-        
 
-def UpdateNamaPemberi():
+def Hapus_pembayaran(akun):
     
+    Notifikasi = ''
     
-    for i in read_pemberi():
-        print(i)
-    
-    
-    InputIdPemberi = input("Masukkan Id Pemberi Zakat : ")
-    
-    if InputIdPemberi:
-        return read_pemberi(InputIdPemberi)[0][0]
-    elif not InputIdPemberi:
-        return None
+    while True:
         
+        clear_screen()
+        
+        print("Hapus Pembayaran")
+
+        if len(Notifikasi) > 0:
+            print(Notifikasi)
+            
+        Konfirmasi = input("Masukkan 0 untuk keluar dari fitur : ")
+        
+        if Konfirmasi == '0':
+            pembayaran(akun)
+        
+        elif len(Konfirmasi) > 0 and Konfirmasi != '0':
+            Notifikasi = "Input tidak valid"
+            
+            continue
+    
+        read_table("Data Pembayaran Zakat", read_pembayaran_with_join())
+        
+        IdPembayaran = input("Masukkan ID yang ingin di hapus : ")
+        IdPemberi = str(read_pembayaran_with_join(IdPembayaran, '')[0][7])
+
+        try:
+            Delete_data('pembayaran_zakat', 'id_pembayaran', IdPembayaran)
+            if read_pembayaran_with_join('' , IdPemberi):
+                continue
+            elif not read_pembayaran_with_join('' , IdPemberi):
+                Update_data('pemberi_zakat', f"id_status_pembayaran_zakat = 2 where id_pemberi_zakat = {IdPemberi}")
+        except:
+            Notifikasi = "Data Tidak Ditemukan"
+            continue
+
         
         
     

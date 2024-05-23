@@ -75,9 +75,15 @@ def Hapus_data_Pemberi():
     query_delete = f"DELETE FROM mata_kuliah WHERE id_mata_kuliah = {idPemberi}"
     cur.execute(query_delete)
     print("Data berhasil dihapus")
-
-def UpdatePemberi(InputPemberi):
-    cur.execute(f"UPDATE pemberi_zakat SET id_status_pembayaran_zakat = 1 where id_pemberi_zakat = '{InputPemberi}'")
+    
+def Update_data(NamaTabel, Query):
+    
+    cur.execute(f"UPDATE {NamaTabel} SET {Query}")
+    conn.commit()
+    
+def Delete_data(nama_tabel, nama_kolom, idData):
+    
+    cur.execute(f"DELETE FROM {nama_tabel} WHERE {nama_kolom} = {idData}")
     conn.commit()
 
 def searchPemberi(Input):
@@ -120,15 +126,17 @@ def read_pembayaran(id: str = ''):
     if data :
         return data
     
-def read_pembayaran_with_join(id: str = ''):
+def read_pembayaran_with_join(idpembayaran: str = '', idpemberi: str = ''):
 
     search: str = ''
 
-    if len(id) > 0 :
-        search = f"where pz.id_pembayaran = {id}"
+    if len(idpembayaran) > 0 :
+        search = f"where pz.id_pembayaran = {idpembayaran}"
+    elif len(idpemberi) > 0 :
+        search = f"where pz.id_pemberi_zakat = {idpemberi}"
 
     cur.execute(f"""
-    select pz.id_pembayaran, pza.nama_pemberi_zakat, pz.besar_pemberian, to_char(pz.tanggal_pemberian, 'DD/MM/YY'), j.nama_jenis_zakat, b.nama_bentuk_zakat, a.nama_amil_zakat
+    select pz.id_pembayaran, pza.nama_pemberi_zakat, pz.besar_pemberian, to_char(pz.tanggal_pemberian, 'DD/MM/YY'), j.nama_jenis_zakat, b.nama_bentuk_zakat, a.nama_amil_zakat, pz.id_pemberi_zakat
     from pembayaran_zakat pz join pemberi_zakat pza on (pz.id_pemberi_zakat = pza.id_pemberi_zakat)
     join jenis_zakat j on (pz.id_jenis_zakat = j.id_jenis_zakat)
     join bentuk_zakat b on (pz.id_bentuk_zakat = b.id_bentuk_zakat)
@@ -161,11 +169,6 @@ def read_amil(nik: str = '') -> list[tuple] :
 def del_amil(nik: str) :
     
     cur.execute(f"DELETE FROM amil_zakat WHERE nik = '{nik}'")
-    conn.commit()
-
-def Update_data(NamaTabel, Query):
-    
-    cur.execute(f"UPDATE {NamaTabel} SET {Query}")
     conn.commit()
 
 """Koneksi ke Penerima Zakat"""
