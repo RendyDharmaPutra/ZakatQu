@@ -29,7 +29,7 @@ def pemberi():
             print("Input tidak valid")
 
 
-def Tambah_data_Pemberi(KolomPemberi,Pemberi):
+def Tambah_data_Pemberi(KolomPemberi: str = '',Pemberi: str = ''):
     query_input=[]
     nama_pemberi = input("Masukkan nama pemberi zakat : ")
     nik_pemberi=input("Masukkan NIK pemberi zakat : ")

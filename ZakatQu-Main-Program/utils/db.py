@@ -33,13 +33,13 @@ def Delete_data(nama_tabel, nama_kolom, idData):
     cur.execute(f"DELETE FROM {nama_tabel} WHERE {nama_kolom} = {idData}")
     conn.commit()
 
-def searchPemberi(Input):
-    cur.execute(f"SELECT * FROM pemberi_zakat where id_pemberi_zakat = {Input}")
-    data = cur.fetchall()
-    if data:
-        return data
-    else:
-        return "Data Tidak Ada"
+# def searchPemberi(Input):
+#     cur.execute(f"SELECT * FROM pemberi_zakat where id_pemberi_zakat = {Input}")
+#     data = cur.fetchall()
+#     if data:
+#         return data
+#     else:
+#         return "Data Tidak Ada"
 
 def read_pemberi(id: str = '', nik: str = ''):
 
