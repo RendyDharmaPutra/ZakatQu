@@ -6,7 +6,7 @@ from utils.db import read_pembayaran_with_join
 from utils.db import Update_data
 from utils.db import Delete_data
 from utils.terminal import clear_screen
-from utils.db import Tambah_data_Pemberi
+from pages.pemberi import Tambah_data_Pemberi
 from components.table import read_table
 
 from datetime import date
@@ -101,7 +101,7 @@ def InputNamaPemberi(Kondisi: str = ''):
                         print("InputSalah")
                         Counter += 1
                     case '0':
-                        Nik = Tambah_data_Pemberi()
+                        Nik = Tambah_data_Pemberi('nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat', 'pemberi_zakat')
                         return read_pemberi('',Nik)[0][0]
                     case _:
                         return read_pemberi(InputIdPemberi,'')[0][0]
@@ -109,7 +109,7 @@ def InputNamaPemberi(Kondisi: str = ''):
             InputIdPemberi = input("Masukkan Id Pemberi Zakat : ")
             match InputIdPemberi:
                 case '0':
-                    Nik = Tambah_data_Pemberi()
+                    Nik = Tambah_data_Pemberi('nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat', 'pemberi_zakat')
                     return read_pemberi('',Nik)[0][0]
                 case _:
                     return read_pemberi(InputIdPemberi,'')[0][0]

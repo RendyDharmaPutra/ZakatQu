@@ -160,7 +160,7 @@ def ubah_amil(tabel_data, kolom_data) :
 
         print(read_amil())
 
-        data_search = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))[0]
+        data_search = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))[2]
 
         print(data_search)
 
