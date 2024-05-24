@@ -19,20 +19,17 @@ def distribusi():
 
         read_table("Data Distribusi", read_distribusi_with_join())
 
-        print("\nTambah(1), Ubah(2), Hapus(3), Keluar(0)")
+        print("((1) Deploy, (2) Edit, Keluar(0)")
         fitur = input("Masukkan fitur yang dipilih : ")
 
 
         match fitur :
             case '1' :
-                tambah_amil(tabel_data, kolom_data)
-
+                pass
             case '2' :
-                ubah_amil(tabel_data, kolom_data)
-
+                pass
             case '3' :
-                hapus_amil()
-                
+                pass                
             case '0' :
                 confirm: str = input("Masukkan 0 untuk keluar ke Halaman Utama : ")
 
