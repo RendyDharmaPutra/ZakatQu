@@ -1,13 +1,13 @@
 from utils.terminal import clear_screen
 from components.table import read_table
-from utils.db import conn, cur, read_penerima_join, QueryInput,Update_data, Delete_data
+from utils.db import conn, cur, read_penerima, QueryInput,Update_data, Delete_data
 
 def penerima():
     
     nama_tabel = 'penerima_zakat'
     kolom_tabel = 'nama_kepala_keluarga,no_kk,alamat,"RT/RW",nomor_telepon'
     print("Halaman Penerima")
-    read_table("Data Penerima", read_penerima_join())
+    read_table("Data Penerima", read_penerima())
     print('''1. Tambah Penerima \n2. Edit Penerima \n3. Hapus Penerima \n4. Kembali ke menu sebelumnya''')
     
     Entry = int(input("Masukkan pilihan : "))

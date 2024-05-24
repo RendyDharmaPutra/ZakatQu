@@ -141,7 +141,7 @@ def del_amil(nik: str) :
     cur.execute(f"DELETE FROM amil_zakat WHERE nik = '{nik}'")
     conn.commit()
     
-def read_penerima_join(no_kk : str = '', id : str = ''):
+def read_penerima(no_kk : str = '', id : str = ''):
     search: str = ''
 
     if len(id) > 0 :
@@ -154,6 +154,62 @@ def read_penerima_join(no_kk : str = '', id : str = ''):
     
     if data :
         return data
+    
+def read_penerima_in_distribusi(id : str = ''):
+    search: str = ''
+
+    if len(id) > 0 :
+        search = f"WHERE id_penerima_zakat = {id}"
+
+    cur.execute(f"""select* from distribusi_zakat {search} order by id_penerima_zakat""")
+    data=cur.fetchall()
+    
+    if data :
+        return data
+    
+def read_distribusi(id : str = ''):
+    search: str = ''
+
+    if len(id) > 0 :
+        search = f"WHERE id_distribusi_zakat = {id}"
+
+    cur.execute(f"""select* from distribusi_zakat {search} order by id_distribusi_zakat""")
+    data=cur.fetchall()
+    
+    if data :
+        return data
+    
+def read_detail_distribusi(id : str = '', bentuk_zakat : int = 0):
+    search: str = ''
+
+    if len(id) > 0 and bentuk_zakat > 0 :
+        search = f"WHERE id_distribusi_zakat = {id} and id_bentuk_zakat = {bentuk_zakat}"
+
+    cur.execute(f"""select* from detail_distribusi_zakat {search} order by id_distribusi_zakat""")
+    data=cur.fetchall()
+    
+    if data :
+        return data
+    
+def Read_Banyak_Zakat():
+    cur.execute("""
+    select bz.nama_bentuk_zakat, sum(pz.besar_pemberian)
+    from pembayaran_zakat pz full join bentuk_zakat bz on (pz.id_bentuk_zakat = bz.id_bentuk_zakat)
+    group by bz.nama_bentuk_zakat 
+                """)
+    
+    data = cur.fetchall()
+    return data
+
+def Read_Banyak_Zakat_From_Distribusi():
+    cur.execute("""
+    select bz.nama_bentuk_zakat, sum(ddz.jumlah_zakat)
+    from detail_distribusi_zakat ddz full join bentuk_zakat bz on (ddz.id_bentuk_zakat = bz.id_bentuk_zakat)
+    group by bz.nama_bentuk_zakat 
+                """)
+    
+    data = cur.fetchall()
+    return data
 
 
 

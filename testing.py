@@ -14,10 +14,13 @@
 # print(panel)
 
 
-NamaKolom = 'Besar_Pemberian,Tanggal_Pemberian,ID_Amil_Zakat,ID_pemberi_zakat,ID_Bentuk_Zakat,ID_Jenis_Zakat'
+# NamaKolom = 'Besar_Pemberian,Tanggal_Pemberian,ID_Amil_Zakat,ID_pemberi_zakat,ID_Bentuk_Zakat,ID_Jenis_Zakat'
 
-Kolomfiks = ['ID'] + [ i for i in NamaKolom.replace('_', ' ').replace('_', ' ').split(',')]
+# Kolomfiks = ['ID'] + [ i for i in NamaKolom.replace('_', ' ').replace('_', ' ').split(',')]
 
-KolomQuery = NamaKolom.lower()
-print(Kolomfiks)
-print(KolomQuery)
+# KolomQuery = NamaKolom.lower()
+# print(Kolomfiks)
+# print(KolomQuery)
+
+for i in range(3):
+    print(i)

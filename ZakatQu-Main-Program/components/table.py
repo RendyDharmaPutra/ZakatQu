@@ -15,6 +15,8 @@ def read_table(table_title, datas) :
             column = ['ID Penerima', 'Nama Penerima', 'NO.KK', 'Alamat', 'RT/RW', 'Nomor Telepon']
         case "Data Distribusi":
             column = ["ID Distribusi Zakat", "Nama Penerima Zakat", "Bentuk Zakat", "Jumlah Zakat yang Diterima", "Status Distribusi"]
+        case "Data Banyak Zakat":
+            column = ["Jenis Zakat", "Jumlah Zakat"]
 
 
     console = Console()
@@ -39,6 +41,8 @@ def read_table(table_title, datas) :
         elif table_title == "Data Penerima":
             for data in datas :
                 table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]))
+                
+                
         elif table_title == "Data Distribusi":
             last_id = None
             last_name = None
@@ -62,6 +66,10 @@ def read_table(table_title, datas) :
                         table.add_row(current_id, current_name, str(data[2]), str(data[3]) + " Gram", str(data[4]))
                         last_id, last_name = current_id, current_name
                         
+                        
+        elif table_title == "Data Banyak Zakat":
+            for data in datas :
+                table.add_row(str(data[0]), str(data[1]))         
         else :
             for data in datas :
                 table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]), str(data[6]))

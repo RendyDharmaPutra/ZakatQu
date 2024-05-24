@@ -28,7 +28,7 @@ def main_menu(var: str, akun: List[str] | str):
         case '2':
             pembayaran.pembayaran(akun)
         case '3':
-            distribusi.distribusi()
+            distribusi.distribusi(akun)
         case '4':
             pemberi.pemberi()
         case '5':
