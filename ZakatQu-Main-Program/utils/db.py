@@ -84,13 +84,35 @@ def read_pembayaran_with_join(idpembayaran: str = '', idpemberi: str = ''):
         search = f"where pz.id_pemberi_zakat = {idpemberi}"
 
     cur.execute(f"""
-    select pz.id_pembayaran, pza.nama_pemberi_zakat, pz.besar_pemberian, to_char(pz.tanggal_pemberian, 'DD/MM/YY'), j.nama_jenis_zakat, b.nama_bentuk_zakat, a.nama_amil_zakat, pz.id_pemberi_zakat
+    select pz.id_pembayaran, pza.nama_pemberi_zakat, pz.besar_pemberian, to_char(pz.tanggal_pemberian, 'DD/MM/YY'), b.nama_bentuk_zakat, j.nama_jenis_zakat, a.nama_amil_zakat, pz.id_pemberi_zakat
     from pembayaran_zakat pz join pemberi_zakat pza on (pz.id_pemberi_zakat = pza.id_pemberi_zakat)
     join jenis_zakat j on (pz.id_jenis_zakat = j.id_jenis_zakat)
     join bentuk_zakat b on (pz.id_bentuk_zakat = b.id_bentuk_zakat)
     join amil_zakat a on (pz.id_amil_zakat = a.id_amil_zakat)
     {search}
     Order by pz.id_pembayaran
+                """)
+    data=cur.fetchall()
+    
+    if data :
+        return data
+
+
+def read_distribusi_with_join(iddistribusi: str = ''):
+
+    search: str = ''
+
+    if len(iddistribusi) > 0 :
+        search = f"where pz.id_pembayaran = {iddistribusi}"
+
+    cur.execute(f"""
+    select dz.id_distribusi_zakat, pz.nama_kepala_keluarga, bz.nama_bentuk_zakat, ddz.jumlah_zakat, sd.nama_status_distribusi 
+    from distribusi_zakat dz join detail_distribusi_zakat ddz on (dz.id_distribusi_zakat = ddz.id_distribusi_zakat)
+    join penerima_zakat pz on (pz.id_penerima_zakat = dz.id_penerima_zakat)
+    join bentuk_zakat bz on (bz.id_bentuk_zakat = ddz.id_bentuk_zakat)
+    join status_distribusi sd on (sd.id_status_distribusi = dz.id_status_distribusi) 
+    {search}
+    Order by dz.id_distribusi_zakat
                 """)
     data=cur.fetchall()
     

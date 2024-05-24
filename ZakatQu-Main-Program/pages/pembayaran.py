@@ -64,6 +64,9 @@ def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
         # Jangan diupdate sampai  hasil dari inputKeteranganZakat bisa disolve untuk dimasukkan ke inputquery secara langsung 
         NamaPemberi = InputNamaPemberi()
         JenisZakat, BentukZakat, JumlahZakat = InputKeteranganZakat()
+        
+        print(JenisZakat, BentukZakat, JumlahZakat)
+        input()
 
         InputQuery.append(f'{JumlahZakat}')
         InputQuery.append(date.today().strftime("%d-%m-%Y"))
@@ -123,19 +126,19 @@ def InputKeteranganZakat():
     
     InputJenisZakat = input("Masukkan Jenis Zakat : ")
     
-    Counter1, Counter2 = 0, 0
+    Counter1 = 0
     while InputJenisZakat:
+        
+        Counter2 = 0
         
         match InputJenisZakat:
             
             case "1":
                 
-                
-                print("[(1) Beras], [(2) Uang]")
-                InputBentukZakat = input("Masukkan Bentuk Zakat : ")
-                
-                
-                while InputBentukZakat:
+                while Counter2 < 2:
+                    
+                    print("[(1) Beras], [(2) Uang]")
+                    InputBentukZakat = input("Masukkan Bentuk Zakat : ")
                     
                     match InputBentukZakat:
                         
@@ -144,7 +147,8 @@ def InputKeteranganZakat():
                             return InputJenisZakat, InputBentukZakat, JumlahZakat
                         
                         case "2":
-                            JumlahZakat = int(input("Masukkan Jumlah dalam Ribuan (Rp): "))
+                            JumlahZakat = int(input("Masukkan Jumlah dalam Ribuan (Rp): ")) // 12 #Harga beras 1 kilogram (Dirubah menjadi gram)
+                            InputBentukZakat = "1"
                             return InputJenisZakat, InputBentukZakat, JumlahZakat
                         
                         case _:
@@ -154,12 +158,9 @@ def InputKeteranganZakat():
             
             case "2":
                 
-                
-                print("[(2) Uang], [(2) Emas]")
-                InputBentukZakat = input("Masukkan Bentuk Zakat : ")
-                
-                
-                while InputBentukZakat:
+                while Counter2 < 2:
+                    print("[(2) Uang], [(2) Emas]")
+                    InputBentukZakat = input("Masukkan Bentuk Zakat : ")
                     
                     match InputBentukZakat:
                         
@@ -236,8 +237,10 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
         Id_Pemberi = InputNamaPemberi("Update") or DataTerpanggil[0][4]
         Jenis_Zakat = UpdateJenisZakat() or DataTerpanggil[0][6]
         Bentuk_Zakat = UpdateBentukZakat(Jenis_Zakat) or DataTerpanggil[0][5]
-        Jumlah_Pemberian = UpdateJumlahZakat(Bentuk_Zakat) or DataTerpanggil[0][1]
+        Jumlah_Pemberian = UpdateJumlahZakat(Bentuk_Zakat, Jenis_Zakat)
         
+        if Jenis_Zakat == 1 and Bentuk_Zakat == 2:
+            Bentuk_Zakat = 1
         
         Update_data(NamaTabel, f"id_pemberi_zakat = {Id_Pemberi}, id_jenis_zakat = {Jenis_Zakat}, id_bentuk_zakat = {Bentuk_Zakat}, besar_pemberian = {Jumlah_Pemberian} where id_pembayaran = {InputIdPembayaran}")
         
@@ -279,7 +282,7 @@ def UpdateBentukZakat(Jenis_Zakat):
                     Notifikasi = "Input tidak valid"
                     continue
 
-def UpdateJumlahZakat(Bentuk_Zakat):
+def UpdateJumlahZakat(Bentuk_Zakat, Jenis_Zakat):
     
     Notifikasi = ''
     
@@ -293,21 +296,33 @@ def UpdateJumlahZakat(Bentuk_Zakat):
                 JumlahZakat = input("Masukkan Jumlah dalam Gram (Gr): ")
                 match JumlahZakat:
                     case "":
-                        return None
+                        Notifikasi = "Masukkan Jumlah Dengan Benar"
+                        continue
                     case _:
                         return int(JumlahZakat)
             case 2:
-                JumlahZakat = input("Masukkan Jumlah dalam Ribuan (Rp): ")
-                match JumlahZakat:
-                    case "":
-                        return None
-                    case _:
-                        return int(JumlahZakat)
+                if Jenis_Zakat == 1:
+                    JumlahZakat = input("Masukkan Jumlah dalam Ribuan (Rp): ")
+                    match JumlahZakat:
+                        case "":
+                            Notifikasi = "Masukkan Jumlah Dengan Benar"
+                            continue
+                        case _:
+                            return int(JumlahZakat) // 12
+                elif Jenis_Zakat == 2:
+                    JumlahZakat = input("Masukkan Jumlah dalam Ribuan (Rp): ")
+                    match JumlahZakat:
+                        case "":
+                            Notifikasi = "Masukkan Jumlah Dengan Benar"
+                            continue
+                        case _:
+                            return int(JumlahZakat)
             case 3:
                 JumlahZakat = input("Masukkan Jumlah dalam Gram (g): ")
                 match JumlahZakat:
                     case "":
-                        return None
+                        Notifikasi = "Masukkan Jumlah Dengan Benar"
+                        continue
                     case _:
                         return int(JumlahZakat)
             case _:

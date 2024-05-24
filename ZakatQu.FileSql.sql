@@ -18,9 +18,7 @@ ALTER TABLE bentuk_zakat ADD CONSTRAINT bentuk_zakat_pk PRIMARY KEY ( id_bentuk_
 
 CREATE TABLE distribusi_zakat (
     id_distribusi_zakat     SERIAL NOT NULL,
-    jumlah_paket_zakat      INTEGER NOT NULL,
     id_amil_zakat           INTEGER NOT NULL,
-    id_bentuk_zakat         INTEGER NOT NULL, 
     id_status_distribusi    INTEGER NOT NULL,
 	id_penerima_zakat		INTEGER NOT NULL
 );
@@ -89,7 +87,7 @@ CREATE TABLE status_pembayaran_zakat (
 ALTER TABLE status_pembayaran_zakat ADD CONSTRAINT status_pembayaran_zakat_pk PRIMARY KEY ( id_status_pembayaran_zakat );
 
 CREATE TABLE detail_distribusi_zakat (
-    id_detail_distribusi                 INTEGER NOT NULL,
+    id_detail_distribusi                 SERIAL NOT NULL,
     jumlah_zakat                         INTEGER NOT NULL, 
     id_distribusi_zakat                  INTEGER NOT NULL,
     id_bentuk_zakat         INTEGER NOT NULL
@@ -108,10 +106,6 @@ ALTER TABLE detail_distribusi_zakat
 ALTER TABLE distribusi_zakat
     ADD CONSTRAINT distribusi_zakat_amil_zakat_fk FOREIGN KEY ( id_amil_zakat )
         REFERENCES amil_zakat ( id_amil_zakat );
-
-ALTER TABLE distribusi_zakat
-    ADD CONSTRAINT distribusi_zakat_bentuk_zakat_fk FOREIGN KEY ( id_bentuk_zakat )
-        REFERENCES bentuk_zakat ( id_bentuk_zakat );
 
 ALTER TABLE distribusi_zakat
     ADD CONSTRAINT distribusi_zakat_status_distribusi_fk FOREIGN KEY ( id_status_distribusi )
@@ -155,8 +149,8 @@ INSERT INTO jenis_zakat (id_jenis_zakat, nama_jenis_zakat) values
 (2, 'Zakat Mal')
 
 INSERT INTO bentuk_zakat (id_bentuk_zakat, nama_bentuk_zakat) values 
-(1, 'Uang'),
-(2, 'Beras'),
+(1, 'Beras'),
+(2, 'Uang'),
 (3, 'Emas')
 
 INSERT INTO amil_zakat (nama_amil_zakat, nik, alamat, "RT/RW", nomor_telepon) values
@@ -166,19 +160,24 @@ INSERT INTO amil_zakat (nama_amil_zakat, nik, alamat, "RT/RW", nomor_telepon) va
 ('Cahaya Kusuma', '3508416279530684', 'Jl. Kenanga No. 15, Kelurahan Sunter Jaya', '04/17', '082156789012')
 
 INSERT INTO pemberi_zakat (nama_pemberi_zakat, nik, alamat, "RT/RW", nomor_telepon, id_status_pembayaran_zakat) values
-('Fajar Hidayat', '3509724186530729', 'Jl. Trunojoyo VII No. 31', '03/20', '082267890123', 1),
-('Indah Permata Sari', '3502894716503928', 'Jl. Trunojoyo VII No. 47', '03/20', '082378901234', 1),
+('Fajar Hidayat', '3509724186530729', 'Jl. Trunojoyo VII No. 31', '03/20', '082267890123', 2),
+('Indah Permata Sari', '3502894716503928', 'Jl. Trunojoyo VII No. 47', '03/20', '082378901234', 2),
 ('Joko Susilo', '3504719286530741', 'Jl. Trunojoyo VII No. 101', '03/20','085189012345', 2),
-('Mila Setiawan', '3506184927530816', 'Jl. Trunojoyo VII No. 88', '03/20', '085290123456', 1)
+('Mila Setiawan', '3506184927530816', 'Jl. Trunojoyo VII No. 88', '03/20', '085290123456', 2)
 
 INSERT INTO pembayaran_zakat (besar_pemberian, tanggal_pemberian, id_amil_zakat, id_pemberi_zakat, id_bentuk_zakat, id_jenis_zakat) values
-(3, '12-10-2024', 1, 1, 2, 1),
-(50000, '7-10-2024', 2, 3, 1, 2)
+(2500, '12-10-2024', 1, 1, 1, 1),
+(50000, '7-10-2024', 2, 3, 2, 2)
 
 INSERT INTO penerima_zakat (nama_kepala_keluarga, No_KK, alamat, "RT/RW", nomor_telepon) values
 ('Putu Adi', '3509064281350697', 'Jl. Trunojoyo VII No. 17', '03/20', '088145678901'),
 ('Rina Wulandari', '3509061742385069', 'Jl. Trunojoyo VII No. 25', '03/20', '0882-5678-9012')
 
-INSERT INTO distribusi_zakat (jumlah_paket_zakat, id_amil_zakat, id_bentuk_zakat, id_status_distribusi, id_penerima_zakat) values
-(3, 1, 2, 0, 1),
-(3, 1, 3, 0, 2)
+INSERT INTO distribusi_zakat (id_amil_zakat, id_status_distribusi, id_penerima_zakat) values
+(1, 0, 1),
+(1, 0, 2)
+
+INSERT INTO detail_distribusi_zakat (jumlah_zakat, id_distribusi_zakat, id_bentuk_zakat) values
+(5000, 2, 1),
+(21000, 2, 2),
+(25, 2, 3)
