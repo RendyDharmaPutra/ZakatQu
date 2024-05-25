@@ -26,7 +26,13 @@ def main_menu(var: str, akun: List[str] | str):
             
             input("Enter untuk kembali ke Halaman utama")
         case '2':
-            pembayaran.pembayaran(akun)
+            if akun != "Takmir" :
+                pembayaran.pembayaran(akun)
+                return
+            
+            print("\nAnda tidak dapat mengakses fitur ini !")
+            
+            input("Enter untuk kembali ke Halaman utama")
         case '3':
             distribusi.distribusi(akun)
         case '4':
