@@ -9,26 +9,32 @@ from utils.db import Update_data
 def pemberi():
     KolomPemberi='nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat'
     Pemberi='pemberi_zakat'
+    msg=''
+    while True:
+        clear_screen()
 
-    print("Halaman Pemberi")
+        print("Halaman Pemberi\n")
 
-    read_table("Data Pemberi", read_pemberi())
-        
-    print("Tambah[1], Edit[2], Hapus[3]")
-    pilihan=input("Masukkan fitur yang dipilih : ")
-    match pilihan:
-        case '1':
-            Tambah_data_Pemberi(KolomPemberi,Pemberi)
-        case '2':
-            Edit_data_Pemberi(KolomPemberi,Pemberi)
-        case '3':
-            Hapus_data_Pemberi(KolomPemberi,Pemberi)
-        case'0':
-            print('Apakah anda yakin untuk kembali?')
-            input()
-            return -1
-        case _:
-            print("Input tidak valid")
+        if len(msg) > 0:
+            print(msg)
+
+        read_table("Data Pemberi", read_pemberi())
+            
+        print("Tambah[1], Edit[2], Hapus[3]")
+        pilihan=input("Masukkan fitur yang dipilih : ")
+        match pilihan:
+            case '1':
+                Tambah_data_Pemberi(KolomPemberi,Pemberi)
+            case '2':
+                Edit_data_Pemberi(KolomPemberi,Pemberi)
+            case '3':
+                Hapus_data_Pemberi(KolomPemberi,Pemberi)
+            case'0':
+                print('Apakah anda yakin untuk kembali?')
+                input()
+                return -1
+            case _:
+                msg="Input tidak valid"
 
 
 def Tambah_data_Pemberi(KolomPemberi,Pemberi):
