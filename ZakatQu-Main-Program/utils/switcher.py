@@ -5,16 +5,7 @@ from pages import login, distribusi, amil, pembayaran, pemberi, penerima
 
 
 def main_menu(var: str, akun: List[str] | str):
-    # switcher = {
-    #     '1': login.login(),
-    #     '2': amil.amil(),
-    #     '3': pembayaran.pembayaran(),
-    #     '4': distribusi.distribusi(),
-    #     '5': pemberi.pemberi(),
-    #     '6': penerima.penerima(),
-    # }
-
-    # Placeholder
+    
     match var:
         case '1':
             if akun == "Takmir" :
@@ -34,12 +25,28 @@ def main_menu(var: str, akun: List[str] | str):
             
             input("Enter untuk kembali ke Halaman utama")
         case '3':
-            distribusi.distribusi(akun)
+            if akun != "Takmir" :
+                distribusi.distribusi(akun)
+                return
+            
+            print("\nAnda tidak dapat mengakses fitur ini !")
+            
+            input("Enter untuk kembali ke Halaman utama")
         case '4':
-            pemberi.pemberi()
+            if akun != "Takmir" :
+                pemberi.pemberi()
+                return
+            
+            print("\nAnda tidak dapat mengakses fitur ini !")
+            
+            input("Enter untuk kembali ke Halaman utama")
         case '5':
-            penerima.penerima()
+            if akun != "Takmir" :
+                penerima.penerima()
+                return
+            
+            print("\nAnda tidak dapat mengakses fitur ini !")
+            
+            input("Enter untuk kembali ke Halaman utama")
         case _:
             print("Input tidak valid!")
-
-    # return switcher.get(var, 'Input tidak valid')

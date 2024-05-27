@@ -2,7 +2,7 @@ import psycopg2
 
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='Easyjust123', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -16,14 +16,6 @@ def QueryInput(InputQuery, NamaTabel, NamaKolom):
     cur.execute("INSERT INTO " + NamaTabel + " " + f'({NamaKolom})' + " VALUES " + f'{InputQuery}'.replace("[", "(").replace("]", ")"))
     conn.commit()
 
-# =========================== #
-def read_Daftar_Pemberi():
-    cur.execute("Select * From pemberi_zakat;")
-    data=cur.fetchall()
-
-    for i in data:
-        print(i)
-    
 def Update_data(NamaTabel, Query):
     
     cur.execute(f"UPDATE {NamaTabel} SET {Query}")
@@ -34,13 +26,48 @@ def Delete_data(nama_tabel, nama_kolom, idData):
     cur.execute(f"DELETE FROM {nama_tabel} WHERE {nama_kolom} = {idData}")
     conn.commit()
 
-# def searchPemberi(Input):
-#     cur.execute(f"SELECT * FROM pemberi_zakat where id_pemberi_zakat = {Input}")
-#     data = cur.fetchall()
-#     if data:
-#         return data
-#     else:
-#         return "Data Tidak Ada"
+def Delete_data_varchar(nama_tabel, nama_kolom, idData):
+    
+    cur.execute(f"DELETE FROM {nama_tabel} WHERE {nama_kolom} = '{idData}'")
+    conn.commit()
+# =========================== #\
+    
+def read_amil(nik: str = '') -> list[tuple] :
+
+    search: str = ''
+
+    if len(nik) > 0 :
+        search = f"WHERE nik = '{nik}'"
+        
+
+    cur.execute(f"SELECT * FROM amil_zakat {search}")
+    data = cur.fetchall()
+
+    if data :
+        return data
+    
+    return -1
+    
+def read_penerima(no_kk : str = '', id : str = ''):
+    search: str = ''
+
+    if len(id) > 0 :
+        search = f"WHERE id_penerima_zakat = {id}"
+    elif len(no_kk) > 0 :
+        search = f"WHERE nik = '{no_kk}'"
+
+    cur.execute(f"""select* from penerima_zakat {search} order by id_penerima_zakat""")
+    data=cur.fetchall()
+    
+    if data :
+        return data
+
+def read_Daftar_Pemberi():
+    cur.execute("Select * From pemberi_zakat;")
+    data=cur.fetchall()
+
+    for i in data:
+        print(i)
 
 def read_pemberi(id: str = '', nik: str = ''):
 
@@ -96,8 +123,7 @@ def read_pembayaran_with_join(idpembayaran: str = '', idpemberi: str = ''):
     
     if data :
         return data
-
-
+    
 def read_distribusi_with_join(iddistribusi: str = ''):
 
     search: str = ''
@@ -119,42 +145,6 @@ def read_distribusi_with_join(iddistribusi: str = ''):
     if data :
         return data
 
-    
-def read_amil(nik: str = '') -> list[tuple] :
-
-    search: str = ''
-
-    if len(nik) > 0 :
-        search = f"WHERE nik = '{nik}'"
-        
-
-    cur.execute(f"SELECT * FROM amil_zakat {search}")
-    data = cur.fetchall()
-
-    if data :
-        return data
-    
-    return -1
-
-def del_amil(nik: str) :
-    
-    cur.execute(f"DELETE FROM amil_zakat WHERE nik = '{nik}'")
-    conn.commit()
-    
-def read_penerima(no_kk : str = '', id : str = ''):
-    search: str = ''
-
-    if len(id) > 0 :
-        search = f"WHERE id_penerima_zakat = {id}"
-    elif len(no_kk) > 0 :
-        search = f"WHERE nik = '{no_kk}'"
-
-    cur.execute(f"""select* from penerima_zakat {search} order by id_penerima_zakat""")
-    data=cur.fetchall()
-    
-    if data :
-        return data
-    
 def read_penerima_in_distribusi(id : str = ''):
     search: str = ''
 
@@ -210,10 +200,3 @@ def Read_Banyak_Zakat_From_Distribusi():
     
     data = cur.fetchall()
     return data
-
-
-
-    # select pz.id_penerima_zakat, pz.nama_kepala_keluarga, pz.no_kk, pz.alamat, pz."RT/RW", pz.nomor_telepon, sd.nama_status_distribusi
-    # from penerima_zakat pz
-    # join distribusi_zakat dz on pz.id_penerima_zakat = dz.id_penerima_zakat
-    # join status_distribusi sd on dz.id_status_distribusi = sd.id_status_distribusi

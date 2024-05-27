@@ -1,4 +1,4 @@
-from utils.db import Update_data, del_amil, read_amil, QueryInput
+from utils.db import Update_data, read_amil, QueryInput, Delete_data, Delete_data_varchar
 from utils.terminal import clear_screen
 from components.table import read_table
 
@@ -53,7 +53,7 @@ def amil(akun: str):
                 ubah_amil(tabel_data, kolom_data)
 
             case '3' :
-                hapus_amil()
+                hapus_amil(tabel_data)
                 
             case '0' :
                 confirm: str = input("Masukkan 0 untuk keluar ke Halaman Utama : ")
@@ -157,11 +157,6 @@ def ubah_amil(tabel_data, kolom_data) :
 
         data_baru = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))
 
-        # Debugging
-        # print(data_baru)
-
-        # input()
-
         if data_baru == -1 :
             message = "NIK yang dimasukkan tidak terdaftar!"
 
@@ -190,7 +185,7 @@ def ubah_amil(tabel_data, kolom_data) :
     
 
 
-def hapus_amil() :
+def hapus_amil(tabel_data) :
     message: str = ''
 
     while True :
@@ -217,7 +212,7 @@ def hapus_amil() :
             continue
 
 
-        print(read_amil())
+        read_table("Hapus Amil", read_amil())
 
         data_baru = input("\nMasukkan NIK Amil : ")
 
@@ -228,8 +223,11 @@ def hapus_amil() :
 
             continue
 
-
-        # Insert Into Database
-        del_amil(data_baru)
+        Konfirmasi = input("Tekan Enter Untuk Hapus Data, Tekan 0 Untuk Batal")
+        
+        if Konfirmasi.lower() == "0":
+            continue
+        
+        Delete_data_varchar(tabel_data, 'nik', f'{data_baru}')
 
         message = "Berhasil menghapus Amil"

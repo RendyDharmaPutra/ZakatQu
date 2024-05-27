@@ -17,6 +17,8 @@ def read_table(table_title, datas) :
             column = ["ID Distribusi Zakat", "Nama Penerima Zakat", "Bentuk Zakat", "Jumlah Zakat yang Diterima", "Status Distribusi"]
         case "Data Banyak Zakat":
             column = ["Jenis Zakat", "Jumlah Zakat"]
+        case "Hapus Amil":
+            column = ["ID Amil", "Nama_Amil", "NIK", "Alamat Amil", "RT/RW", "No Telepon"]
 
 
     console = Console()
@@ -38,11 +40,9 @@ def read_table(table_title, datas) :
         if table_title == "Data Amil" :
             for data in datas : 
                 table.add_row(str(data[0]),data[1], data[2], data[-1])
-        elif table_title == "Data Penerima":
+        elif table_title == "Data Penerima" or table_title == "Hapus Amil":
             for data in datas :
                 table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]))
-                
-                
         elif table_title == "Data Distribusi":
             last_id = None
             last_name = None
@@ -75,11 +75,5 @@ def read_table(table_title, datas) :
                 table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]), str(data[6]))
     except:
         print("Data Kosong")
-        # case "Data Pemberi" :
-        #     for data in datas :
-        #         table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]), str(data[6]))
-        # case "Data Penerima" :
-        #     for data in datas :
-        #         table.add_row(str(data[0]), str(data[1]), str(data[2]), str(data[3]), str(data[4]), str(data[5]), str(data[6]))        
-    
+            
     console.print(table)
