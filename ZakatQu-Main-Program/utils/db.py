@@ -30,6 +30,7 @@ def Delete_data_varchar(nama_tabel, nama_kolom, idData):
     
     cur.execute(f"DELETE FROM {nama_tabel} WHERE {nama_kolom} = '{idData}'")
     conn.commit()
+
 # =========================== #\
     
 def read_amil(nik: str = '') -> list[tuple] :
