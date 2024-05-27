@@ -1,6 +1,6 @@
+from utils.db import conn, cur, read_penerima, QueryInput,Update_data, Delete_data
 from utils.terminal import clear_screen
 from components.table import read_table
-from utils.db import conn, cur, read_penerima, QueryInput,Update_data, Delete_data
 
 def penerima():
     
@@ -25,13 +25,7 @@ def penerima():
             print("Kembali ke menu sebelumnya ?  ")
             input()
 
-"""Koneksi ke Penerima Zakat"""    
-    
-# def Lihat_data_Penerima():
-#     cur.execute("Select * From penerima_zakat;")
-#     data=cur.fetchall()
-#     for i in data:
-#         print(i)
+
 def Lihat_data_Penerima(no_kk: str = ''):
 
     search : str = ''
@@ -44,7 +38,6 @@ def Lihat_data_Penerima(no_kk: str = ''):
 
     if data :
         return data
-
 
 
 def Tambah_data_Penerima(tabel_data, kolom_data) :
@@ -85,6 +78,7 @@ def Tambah_data_Penerima(tabel_data, kolom_data) :
         QueryInput(data_baru, tabel_data, kolom_data)
 
         message = "Berhasil menambah Penerima"
+
 
 def Edit_data_Penerima(tabel_data, kolom_data):
     message: str = ''
@@ -137,12 +131,7 @@ def Edit_data_Penerima(tabel_data, kolom_data):
                     
         message = "Berhasil mengubah data penerima"
 
-# def Hapus_data_Penerima():
-#     Lihat_data_Penerima()
-#     idPenerima = input('Masukkan id penerima yang ingin dihapus: ')
-#     query_delete = f"DELETE FROM penerima_zakat WHERE id_penerima_zakat = {idPenerima}"
-#     cur.execute(query_delete)
-#     conn.commit()
+
 def Hapus_data_Penerima(tabel_data, kolom_data):
     message: str = ''
 

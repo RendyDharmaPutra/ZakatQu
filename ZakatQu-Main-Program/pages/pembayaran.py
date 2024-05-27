@@ -1,14 +1,7 @@
-from utils.db import conn, cur
-from utils.db import QueryInput
-from utils.db import read_pemberi
-from utils.db import read_pembayaran
-from utils.db import read_pembayaran_with_join
-from utils.db import Update_data
-from utils.db import Delete_data
+from utils.db import conn, cur, QueryInput, read_pemberi, read_pembayaran, read_pembayaran_with_join, Update_data, Delete_data
 from utils.terminal import clear_screen
 from pages.pemberi import Tambah_data_Pemberi
 from components.table import read_table
-
 from datetime import date
 
 def pembayaran(akun: str):
@@ -82,7 +75,6 @@ def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
             Notifikasi = "Input tidak valid"
             
             continue
-            
             
         # Jangan diupdate sampai  hasil dari inputKeteranganZakat bisa disolve untuk dimasukkan ke inputquery secara langsung 
         NamaPemberi = InputNamaPemberi()

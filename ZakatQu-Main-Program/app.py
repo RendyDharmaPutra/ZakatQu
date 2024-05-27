@@ -33,8 +33,7 @@ if __name__ == '__main__':
 
     while(len(akun) > 0) :
         terminal.clear_screen()
-        
-        # Debug data akun dari login
+
         print(akun)
 
         list_menu: List[str] = ["Amil zakat", "Pembayaran Zakat", "Distribusi", "Pemberi Zakat", "Penerima Zakat", "Keluar dari aplikasi"]

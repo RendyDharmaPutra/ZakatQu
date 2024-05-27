@@ -49,23 +49,17 @@ def read_table(table_title, datas) :
             for data in datas:
                 current_id, current_name = str(data[0]), str(data[1])
                 if current_id == last_id and current_name == last_name:
-                    if str(data[2]) == "Beras":
+                    if str(data[2]) == "Beras" or str(data[2]) == "Emas":
                         table.add_row("", "", str(data[2]), str(data[3]) + " Gram", str(data[4]))
                     elif str(data[2]) == "Uang":
                         table.add_row("", "", str(data[2]), "Rp." + str(data[3]), str(data[4]))
-                    elif str(data[2]) == "Emas":
-                        table.add_row("", "", str(data[2]), str(data[3]) + " Gram", str(data[4]))
                 else:
-                    if str(data[2]) == "Beras":
+                    if str(data[2]) == "Beras" and str(data[2]) == "Emas":
                         table.add_row(current_id, current_name, str(data[2]), str(data[3]) + " Gram", str(data[4]))
                         last_id, last_name = current_id, current_name
                     elif str(data[2]) == "Uang":
                         table.add_row(current_id, current_name, str(data[2]), "Rp." + str(data[3]), str(data[4]))
-                        last_id, last_name = current_id, current_name
-                    elif str(data[2]) == "Emas":
-                        table.add_row(current_id, current_name, str(data[2]), str(data[3]) + " Gram", str(data[4]))
-                        last_id, last_name = current_id, current_name
-                        
+                        last_id, last_name = current_id, current_name                        
                         
         elif table_title == "Data Banyak Zakat":
             for data in datas :

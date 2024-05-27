@@ -3,28 +3,6 @@ from utils.terminal import clear_screen
 from components.table import read_table
 
 
-
-# def read_table(datas) :
-#     console = Console()
-
-#     # table_title = Text("Data Amil").stylize("bold bright_green")
-#     # console.print(table_title)
-
-#     table = Table(show_header=True, header_style="bold")
-
-#     table.add_column("id", style="cyan bold", header_style="bold")
-#     table.add_column("Nama Amil", style="green", header_style="bold")
-#     table.add_column("NIK", style="green", header_style="bold")
-#     table.add_column("No Telepon", style="green", header_style="bold")
-
-#     for data in datas : 
-#         table.add_row(str(data[0]),data[1], data[2], data[-1])
-
-#     console.print(table)
-
-
-
-
 def amil(akun: str):
     tabel_data = "amil_zakat"
     kolom_data = 'nama_amil_zakat, nik, alamat, "RT/RW", nomor_telepon'
