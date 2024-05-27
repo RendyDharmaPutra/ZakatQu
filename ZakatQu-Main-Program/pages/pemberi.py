@@ -1,10 +1,6 @@
+from utils.db import read_pemberi, cur, conn, QueryInput, Delete_data, Update_data
 from utils.terminal import clear_screen
-from utils.db import read_pemberi
 from components.table import read_table
-from utils.db import cur, conn
-from utils.db import QueryInput
-from utils.db import Delete_data
-from utils.db import Update_data
 
 def pemberi():
     KolomPemberi='nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat'
