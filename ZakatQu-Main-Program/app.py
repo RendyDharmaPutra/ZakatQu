@@ -30,18 +30,18 @@ if __name__ == '__main__':
         print("Silahkan buka aplikasi kembali")
 
         
+    confirm: str = ''
 
-    while(len(akun) > 0) :
+    while(len(akun) > 0 and confirm != 'y') :
         terminal.clear_screen()
-        
-        # Debug data akun dari login
+
         print(akun)
 
         list_menu: List[str] = ["Amil zakat", "Pembayaran Zakat", "Distribusi", "Pemberi Zakat", "Penerima Zakat", "Keluar dari aplikasi"]
         list.print_list(list_menu)
 
         result: str = input("Pilih menu yang dituju : ")
-        switcher.main_menu(result, akun)
+        confirm = switcher.main_menu(result, akun)
 
 
 

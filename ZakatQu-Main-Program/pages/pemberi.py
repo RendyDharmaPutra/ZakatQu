@@ -1,3 +1,4 @@
+from utils.db import read_pemberi, cur, conn, QueryInput, Delete_data, Update_data
 from utils.terminal import clear_screen
 from utils.db import read_pemberi,Update_data,Delete_data,QueryInput
 from components.table import read_table

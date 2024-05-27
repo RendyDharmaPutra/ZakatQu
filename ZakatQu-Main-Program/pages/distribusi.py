@@ -1,4 +1,4 @@
-from utils.db import conn, cur, read_distribusi_with_join, read_penerima, read_penerima_in_distribusi, Read_Banyak_Zakat, Read_Banyak_Zakat_From_Distribusi, QueryInput, Update_data, read_distribusi, read_detail_distribusi
+from utils.db import conn, cur, read_distribusi_with_join, read_penerima, read_penerima_in_distribusi, Read_Banyak_Zakat, Read_Banyak_Zakat_From_Distribusi, QueryInput, Update_data, read_distribusi, read_detail_distribusi, Delete_data
 from components.table import read_table
 from utils.terminal import clear_screen
 
@@ -19,7 +19,7 @@ def distribusi(akun):
 
         read_table("Data Distribusi", read_distribusi_with_join())
 
-        print("((1) Tambah Data Distribusi, (2) Edit Data Penerima, Keluar(0)")
+        print("((1) Tambah Data Distribusi, (2) Edit Data Penerima, (3) Hapus Data Distribusi,(0) Keluar")
         fitur = input("Masukkan fitur yang dipilih : ")
 
 
@@ -29,7 +29,7 @@ def distribusi(akun):
             case '2' :
                 edit_data_distribusi(tabel_data, kolom_data, akun)
             case '3' :
-                pass                
+                delete_data_distribusi(tabel_data, kolom_data)               
             case '0' :
                 confirm: str = input("Masukkan 0 untuk keluar ke Halaman Utama : ")
 
@@ -73,7 +73,7 @@ def memasukkan_semua_data(tabel_data, kolom_data, akun):
         confirm: str = input("Masukkan 0 untuk keluar dari fitur : ")
 
         if confirm == '0' :
-            return -1
+            return
         
         elif len(confirm) > 0 and confirm != '0' :
             message = "Input tidak valid"
@@ -168,7 +168,7 @@ def edit_data_distribusi(tabel_data, kolom_data, akun):
         Konfirmasi = input("Masukkan 0 untuk keluar dari fitur : ")
         
         if Konfirmasi == '0':
-            distribusi(akun)
+            return
         
         elif len(Konfirmasi) > 0 and Konfirmasi != '0':
             Notifikasi = "Input tidak valid"
@@ -217,6 +217,8 @@ def edit_data_distribusi(tabel_data, kolom_data, akun):
             case "N":
                 continue
         message = "Data Telah Tersimpan"
+        
+    return
             
         
         
@@ -229,7 +231,48 @@ def Update_Penerima():
     
     return Data
 
+
+def delete_data_distribusi(tabel_data, kolom_data):
+    Notifikasi = ''
+    
+    while True:
         
+        clear_screen()
+        
+        print("Edit Data Distribusi Zakat")
+
+        if len(Notifikasi) > 0:
+            print(Notifikasi)
+            
+        Konfirmasi = input("Masukkan 0 untuk keluar dari fitur : ")
+        
+        if Konfirmasi == '0':
+            return
+        
+        elif len(Konfirmasi) > 0 and Konfirmasi != '0':
+            Notifikasi = "Input tidak valid"
+            
+            continue
+        
+        read_table("Data Distribusi", read_distribusi_with_join())
+        
+        Input = input("Masukkan id distribusi yang ingin diubah : ")
+        
+        Konfirmasi = input("Tekan Enter Untuk Hapus Data, Tekan 0 Untuk Batal")
+        
+        if Konfirmasi.lower() == "0":
+            continue
+        
+        try: 
+            Delete_data("detail_distribusi_zakat", "id_distribusi_zakat", Input)
+            Delete_data(tabel_data, "id_distribusi_zakat", Input)
+        except:
+            Notifikasi = "Data Tidak Dapat Ditemukan"
+            continue
+        
+        Notifikasi = "Data Telah Terhapus"
+    
+    return
         
             
         
