@@ -48,5 +48,14 @@ def main_menu(var: str, akun: List[str] | str):
             print("\nAnda tidak dapat mengakses fitur ini !")
             
             input("Enter untuk kembali ke Halaman utama")
+        case '6':
+            while(True) :
+                confirm: str = input("Yakin untuk keluar? (y/n) ")
+
+                if confirm != 'y' and confirm != 'n' :
+                    continue
+                
+                return confirm
+
         case _:
             print("Input tidak valid!")

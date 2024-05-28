@@ -1,6 +1,9 @@
 from utils.db import read_pemberi, cur, conn, QueryInput, Delete_data, Update_data
 from utils.terminal import clear_screen
+from utils.db import read_pemberi,Update_data,Delete_data,QueryInput
 from components.table import read_table
+from utils.db import cur, conn
+from utils.db import read_pemberi
 
 def pemberi():
     KolomPemberi='nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat'
@@ -58,6 +61,9 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
 
         nama_pemberi = input("Masukkan nama pemberi zakat : ")
         nik_pemberi=input("Masukkan NIK pemberi zakat : ")
+        if len(nik_pemberi)>16:
+            msg="NIK yang dimasukkan terlalu panjang"
+            continue
         alamat_pemberi=input("Masukkan alamat pemberi zakat : ")
         RtRw_pemberi=input("Masukkan RT/RW pemberi zakat : ")
         telepon_pemberi= input("Masukkan nomor telepon pemberi zakat : ")
@@ -76,8 +82,16 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
             pemberi()
         
         else:
-            QueryInput(query_input,Pemberi,KolomPemberi)
-            print("Data Berhasil Disimpan")
+            data_search = read_pemberi(query_input[1])
+
+        if data_search != -1 :
+            msg = "NIK yang dimasukkan sudah terdaftar!"
+
+            continue
+
+
+        QueryInput(query_input,Pemberi,KolomPemberi)           
+        print("Data Berhasil Disimpan")
 
         return nik_pemberi
     
@@ -85,7 +99,7 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
 def Edit_data_Pemberi(KolomPemberi,Pemberi):
     msg=''
     while True:
-        
+        query_input=[]    
 
         clear_screen()
 
@@ -106,6 +120,9 @@ def Edit_data_Pemberi(KolomPemberi,Pemberi):
         read_table("Data Pemberi", read_pemberi())
 
         id_dipilih=(input("Masukkan id pemberi yang ingin di edit : "))
+        if len(id_dipilih) <=0:
+            msg = "Input tidak valid"
+            continue
         select_query=f"SELECT * FROM  pemberi_zakat WHERE id_pemberi_zakat ={id_dipilih}"
         cur.execute(select_query,(id_dipilih))
         data2=cur.fetchone()
@@ -122,11 +139,20 @@ def Edit_data_Pemberi(KolomPemberi,Pemberi):
 
         nama_pemberi = input(f"Masukkan nama pemberi yang baru : ") or data2[1]
         nik = input(f"Masukkan nik yang baru : ") or data2[2]
+        if len(nik)>16:
+            msg="NIK yang dimasukkan terlalu panjang"
+            continue
         alamat= input(f"Masukkan alamat yang baru : ") or data2[3]
         RtRW = input(f"Masukkan RT/RW yang baru : ") or data2[4]
         telepon = input(f"Masukkan nomor telepon yang baru : ") or data2[5]
         statusBayar=2
 
+        query_input.append(f'{nama_pemberi}')
+        query_input.append(f'{nik}')
+        query_input.append(f'{alamat}')
+        query_input.append(f'{RtRW}')
+        query_input.append(f'{telepon}')
+        query_input.append(statusBayar)
 
         Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
         
@@ -134,8 +160,15 @@ def Edit_data_Pemberi(KolomPemberi,Pemberi):
             pemberi()
         
         else:
-            Update_data(Pemberi,f"nama_pemberi_zakat='{nama_pemberi}',nik='{nik}',alamat='{alamat}',\"RT/RW\"='{RtRW}',nomor_telepon='{telepon}',id_status_pembayaran_zakat={statusBayar} WHERE id_pemberi_zakat={id_dipilih}")
-            msg="Data Berhasil Diubah"
+            data_search = read_pemberi(query_input[1])
+
+        if data_search != -1 :
+            msg = "NIK yang dimasukkan sudah terdaftar!"
+
+            continue
+
+        Update_data(Pemberi,f"nama_pemberi_zakat='{nama_pemberi}',nik='{nik}',alamat='{alamat}',\"RT/RW\"='{RtRW}',nomor_telepon='{telepon}',id_status_pembayaran_zakat={statusBayar} WHERE id_pemberi_zakat={id_dipilih}")
+        msg="Data Berhasil Diubah"
 
         return nik
 
@@ -162,6 +195,12 @@ def Hapus_data_Pemberi(KolomPemberi,Pemberi):
 
         read_table("Data Pemberi", read_pemberi())
         idPemberi = input('Masukkan id Pemberi yang ingin dihapus: ')
+
+
+        if len(idPemberi) <=0:
+            msg = "Input tidak valid"
+            continue
+
         Konfirmasi=input(f"Apakah anda yakin untuk menghapus Data nomor {idPemberi}?[y/n]")
 
         if Konfirmasi!='y':
