@@ -19,21 +19,46 @@ def pemberi():
 
         read_table("Data Pemberi", read_pemberi())
             
-        print("Tambah[1], Edit[2], Hapus[3]")
+        print("Tambah[1], Edit[2], Hapus[3], Kembali[0]")
         pilihan=input("Masukkan fitur yang dipilih : ")
-        match pilihan:
+        match pilihan :
             case '1':
                 Tambah_data_Pemberi(KolomPemberi,Pemberi)
             case '2':
                 Edit_data_Pemberi(KolomPemberi,Pemberi)
             case '3':
                 Hapus_data_Pemberi(KolomPemberi,Pemberi)
-            case'0':
-                print('Apakah anda yakin untuk kembali?')
-                input()
-                return -1
-            case _:
-                msg="Input tidak valid"
+            case '0':
+                confirm: str = input("Masukkan 0 untuk keluar ke Halaman Utama : ")
+
+                if confirm == '0' :
+                    return -1
+
+                elif len(confirm) > 0 and confirm != '0' :
+                    msg = "Input tidak valid"
+
+                    continue
+
+            case _ :
+                msg = "Input tidak valid"
+
+                continue
+        # match pilihan:
+        #     case '1':
+        #         Tambah_data_Pemberi(KolomPemberi,Pemberi)
+        #     case '2':
+        #         Edit_data_Pemberi(KolomPemberi,Pemberi)
+        #     case '3':
+        #         Hapus_data_Pemberi(KolomPemberi,Pemberi)
+        #     case'0':
+        #         yn=input("Apakah anda yakin untuk kembali?[y/n]")
+        #         match yn:
+        #             case 'y':
+        #                 break
+        #             case _:
+        #                 continue
+        #     case _:
+        #         msg="Input tidak valid"
 
 
 def Tambah_data_Pemberi(KolomPemberi,Pemberi):
@@ -52,7 +77,7 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
         Konfirmasi=input("Ketik 0 untuk kembali, [enter] untuk lanjut : ")
 
         if Konfirmasi=='0':
-            pemberi()
+            break
 
         elif len(Konfirmasi) > 0 and Konfirmasi != '0':
             msg = "Input tidak valid"   
@@ -111,7 +136,7 @@ def Edit_data_Pemberi(KolomPemberi,Pemberi):
         Konfirmasi=input("Ketik 0 untuk kembali, [enter] untuk lanjut : ")
 
         if Konfirmasi=='0':
-            pemberi()
+            break
 
         elif len(Konfirmasi) > 0 and Konfirmasi != '0':
             msg = "Input tidak valid"   
@@ -120,9 +145,10 @@ def Edit_data_Pemberi(KolomPemberi,Pemberi):
         read_table("Data Pemberi", read_pemberi())
 
         id_dipilih=(input("Masukkan id pemberi yang ingin di edit : "))
-        if len(id_dipilih) <=0:
+        if len(id_dipilih) <=0 or id_dipilih.isnumeric()==False:
             msg = "Input tidak valid"
             continue
+
         select_query=f"SELECT * FROM  pemberi_zakat WHERE id_pemberi_zakat ={id_dipilih}"
         cur.execute(select_query,(id_dipilih))
         data2=cur.fetchone()
@@ -187,7 +213,7 @@ def Hapus_data_Pemberi(KolomPemberi,Pemberi):
         Konfirmasi=input("Ketik 0 untuk kembali, [enter] untuk lanjut : ")
 
         if Konfirmasi=='0':
-            pemberi()
+            break
 
         elif len(Konfirmasi) > 0 and Konfirmasi != '0':
             msg = "Input tidak valid"   
@@ -197,7 +223,7 @@ def Hapus_data_Pemberi(KolomPemberi,Pemberi):
         idPemberi = input('Masukkan id Pemberi yang ingin dihapus: ')
 
 
-        if len(idPemberi) <=0:
+        if len(idPemberi) <=0 or idPemberi.isnumeric()==False:
             msg = "Input tidak valid"
             continue
 

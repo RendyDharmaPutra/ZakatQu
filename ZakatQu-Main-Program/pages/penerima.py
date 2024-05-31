@@ -124,7 +124,7 @@ def Edit_data_Penerima(tabel_data, kolom_data):
         Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
         
         if Konfirmasi.lower() == "0":
-            pemberi()
+            break
         
         else:
             Update_data('penerima_zakat',f"nama_kepala_keluarga='{NamaPenerima}',no_kk='{NoKK}',alamat='{Alamat}',\"RT/RW\"='{RtRw}',nomor_telepon='{Telepon}' WHERE id_penerima_zakat={IdDipilih}")

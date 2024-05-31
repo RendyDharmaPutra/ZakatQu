@@ -24,3 +24,7 @@
 
 for i in range(3):
     print(i)
+
+kelas="1A"
+cek=kelas.isdigit()
+print(cek)
