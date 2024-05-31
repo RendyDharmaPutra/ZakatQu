@@ -1,6 +1,6 @@
 from typing import List
 
-from pages import login, distribusi, amil, pembayaran, pemberi, penerima
+from pages import login, distribusi, amil, pembayaran, pemberi, penerima, setting
 
 
 
@@ -49,6 +49,14 @@ def main_menu(var: str, akun: List[str] | str):
             
             input("Enter untuk kembali ke Halaman utama")
         case '6':
+            if akun != "Takmir" :
+                setting.setting(akun)
+                return
+            
+            print("\nAnda tidak dapat mengakses fitur ini !")
+            
+            input("Enter untuk kembali ke Halaman utama")
+        case '7':
             while(True) :
                 confirm: str = input("Yakin untuk keluar? (y/n) ")
 
