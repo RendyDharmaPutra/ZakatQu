@@ -88,6 +88,14 @@ def tambah_amil(tabel_data, kolom_data) :
         data_baru.append(input("Masukkan RT/RW amil : "))
         data_baru.append(input("Masukkan Nomor Telepon Amil : "))
 
+        # Validasi
+        message = validate(data_baru)
+
+        if len(message) > 0 :
+            continue
+
+
+
         data_search = read_amil(data_baru[1])
 
         if data_search != -1 :
@@ -101,6 +109,21 @@ def tambah_amil(tabel_data, kolom_data) :
         QueryInput(data_baru, tabel_data, kolom_data)
 
         message = "Berhasil menambah Amil"
+
+def validate(data) :
+    message: str = ''
+
+    if data[0].isalnum() or data[0].isnumeric() :
+        message = "Nama tidak boleh mengandung Angka!"
+    elif data[1].isalnum() or data[1].isalpha() :
+        message = "NIK tidak boleh mengandung Huruf!"
+    elif data[3].isalnum() or data[3].isalpha() :
+        message = "RT/RW tidak boleh mengandung Huruf!"
+    elif data[4].isalnum or data[4].isalpha() :
+        message = "Nomor Telepon tidak boleh mengandung Huruf!"
+    
+
+    return message
 
 
 
@@ -134,10 +157,14 @@ def ubah_amil(tabel_data, kolom_data) :
         read_table("Data Amil", read_amil())
 
         data_baru = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))
-
+        
         if data_baru == -1 :
             message = "NIK yang dimasukkan tidak terdaftar!"
 
+            continue
+        elif len(data_baru) > 0 :
+            message = "NIK yang dimasukkan tidak boleh kosong!"
+            
             continue
 
         
@@ -152,6 +179,12 @@ def ubah_amil(tabel_data, kolom_data) :
         data_baru[3] = input("Masukkan Alamat Rumah Amil : ") or data_baru[3]
         data_baru[4] = input("Masukkan RT/RW amil : ") or data_baru[4]
         data_baru[5] = input("Masukkan Nomor Telepon Amil : ") or data_baru[5]
+
+        # Validasi
+        message = validate(data_baru[1:-1])
+
+        if len(message) > 0 :
+            continue
 
         print(data_baru)
 
