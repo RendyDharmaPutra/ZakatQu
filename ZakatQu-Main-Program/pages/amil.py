@@ -1,7 +1,7 @@
 from utils.db import Update_data, read_amil, QueryInput, Delete_data, Delete_data_varchar
 from utils.terminal import clear_screen
 from components.table import read_table
-from utils.validate import validate_amil
+from utils.validate import validate_empty
 
 
 def amil(akun: str):
@@ -90,7 +90,7 @@ def tambah_amil(tabel_data, kolom_data) :
         data_baru.append(input("Masukkan Nomor Telepon Amil : "))
 
         # Validasi
-        message = validate_amil(data_baru)
+        message = validate_empty(data_baru)
 
         if len(message) > 0 :
             continue
