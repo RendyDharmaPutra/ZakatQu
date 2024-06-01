@@ -1,6 +1,7 @@
 from utils.db import Update_data, read_amil, QueryInput, Delete_data, Delete_data_varchar
 from utils.terminal import clear_screen
 from components.table import read_table
+from utils.validate import validate_amil
 
 
 def amil(akun: str):
@@ -88,6 +89,14 @@ def tambah_amil(tabel_data, kolom_data) :
         data_baru.append(input("Masukkan RT/RW amil : "))
         data_baru.append(input("Masukkan Nomor Telepon Amil : "))
 
+        # Validasi
+        message = validate_amil(data_baru)
+
+        if len(message) > 0 :
+            continue
+
+
+
         data_search = read_amil(data_baru[1])
 
         if data_search != -1 :
@@ -133,8 +142,15 @@ def ubah_amil(tabel_data, kolom_data) :
 
         read_table("Data Amil", read_amil())
 
-        data_baru = read_amil(input("Masukkan NIK data amil yang ingin diubah : "))
+        data_baru = input("Masukkan NIK data amil yang ingin diubah : ")
+        
+        if len(data_baru) == 0 :
+            message = "NIK yang dimasukkan tidak boleh kosong!"
+            
+            continue
 
+        data_baru = read_amil(data_baru)
+        
         if data_baru == -1 :
             message = "NIK yang dimasukkan tidak terdaftar!"
 
@@ -152,6 +168,12 @@ def ubah_amil(tabel_data, kolom_data) :
         data_baru[3] = input("Masukkan Alamat Rumah Amil : ") or data_baru[3]
         data_baru[4] = input("Masukkan RT/RW amil : ") or data_baru[4]
         data_baru[5] = input("Masukkan Nomor Telepon Amil : ") or data_baru[5]
+
+        # Validasi
+        message = validate_amil(data_baru[1:-1])
+
+        if len(message) > 0 :
+            continue
 
         print(data_baru)
 
@@ -193,11 +215,16 @@ def hapus_amil(tabel_data) :
         read_table("Hapus Amil", read_amil())
 
         data_baru = input("\nMasukkan NIK Amil : ")
+        
+        if len(data_baru) == 0 :
+            message = "NIK yang dimasukan tidak boleh kosong!"
 
-        data_search = read_amil(data_baru)
+            continue
 
-        if data_search == -1 :
-            message = "Id yang dimasukkan tidak terdaftar!"
+        data_baru = read_amil(data_baru)
+
+        if data_baru == -1 :
+            message = "NIK yang dimasukkan tidak terdaftar!"
 
             continue
 
@@ -206,6 +233,7 @@ def hapus_amil(tabel_data) :
         if Konfirmasi.lower() == "0":
             continue
         
+
         Delete_data_varchar(tabel_data, 'nik', f'{data_baru}')
 
         message = "Berhasil menghapus Amil"
