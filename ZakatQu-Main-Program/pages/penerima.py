@@ -64,6 +64,9 @@ def Tambah_data_Penerima(tabel_data, kolom_data) :
         data_baru.append(input("Masukkan alamat penerima zakat : "))
         data_baru.append(input("Masukkan RT/RW penerima zakat : "))
         data_baru.append(input("Masukkan nomor telepon penerima zakat : "))
+        
+        if len(data_baru) < 5:
+            message = "Input tidak valid"
 
         if (len(data_baru[0]) == 0 or len(data_baru[1]) == 0 or 
             len(data_baru[2]) == 0 or len(data_baru[3]) == 0 or len(data_baru[4]) == 0):
