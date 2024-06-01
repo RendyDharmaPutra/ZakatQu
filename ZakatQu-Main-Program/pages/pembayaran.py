@@ -82,21 +82,16 @@ def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
         except:
             Notifikasi = "Data Tidak Ditemukan"
             continue
-
-        if not NamaPemberi:
+        if NamaPemberi == None:
             Notifikasi = "Masukkan Data Dengan Benar"
             continue
-        if NamaPemberi == None:
-            continue
+
         JenisZakat, BentukZakat, JumlahZakat = InputKeteranganZakat()
         
         if not JenisZakat or not BentukZakat or not JumlahZakat:
             Notifikasi = "Masukkan Data Dengan Benar"
             continue
         
-        print(JenisZakat, BentukZakat, JumlahZakat)
-        input()
-
         InputQuery.append(f'{JumlahZakat}')
         InputQuery.append(date.today().strftime("%d-%m-%Y"))
         InputQuery.append(akun[0][0])
@@ -142,6 +137,9 @@ def InputNamaPemberi(Kondisi: str = ''):
         case 'Update':
             InputIdPemberi = input("Masukkan Id Pemberi Zakat : ")
             match InputIdPemberi:
+                case '':
+                        print("InputSalah")
+                        return None
                 case '0':
                     Nik = Tambah_data_Pemberi('nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat', 'pemberi_zakat')
                     return read_pemberi('',Nik)[0][0]
@@ -253,8 +251,6 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
             
             
         DataTerpanggil = read_pembayaran_with_join(InputIdPembayaran,'')
-        print(DataTerpanggil)
-        input()
         if DataTerpanggil:
             print('Data saat ini:')
             print(f'id pembayaran zakat saat ini : {DataTerpanggil[0][0]}')
@@ -270,7 +266,7 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
             if Konfirmasi.lower() == "0":
                 continue
             else:
-                DataTerpanggil = read_pembayaran(InputIdPembayaran)
+                DataTerpanggilBaru = read_pembayaran(InputIdPembayaran)
         else:
             Konfirmasi = "Data tidak ditemukan"
             continue
@@ -278,13 +274,13 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
             
             # [(26, 2500, datetime.date(2024, 5, 21), 1, (3), 1, 1)]
         try:
-            Id_Pemberi = InputNamaPemberi("Update") or DataTerpanggil[0][4]
+            Id_Pemberi = InputNamaPemberi("Update") or DataTerpanggilBaru[0][4]
         except:
             Notifikasi = "Proses Berhenti"
             continue
-        
-        Jenis_Zakat = UpdateJenisZakat() or DataTerpanggil[0][6]
-        Bentuk_Zakat = UpdateBentukZakat(Jenis_Zakat) or DataTerpanggil[0][5]
+
+        Jenis_Zakat = UpdateJenisZakat() or DataTerpanggilBaru[0][6]
+        Bentuk_Zakat = UpdateBentukZakat(Jenis_Zakat) or DataTerpanggilBaru[0][5]
         Jumlah_Pemberian = UpdateJumlahZakat(Bentuk_Zakat, Jenis_Zakat)
         
         if Jenis_Zakat == 1 and Bentuk_Zakat == 2:
@@ -299,9 +295,10 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
         #Update data pembayaran
         Update_data(NamaTabel, f"id_pemberi_zakat = {Id_Pemberi}, id_jenis_zakat = {Jenis_Zakat}, id_bentuk_zakat = {Bentuk_Zakat}, besar_pemberian = {Jumlah_Pemberian} where id_pembayaran = {InputIdPembayaran}")
         
-        if Id_Pemberi != DataTerpanggil[0][4]: #Udate status pembayaran yang diubah
-            DataLama = DataTerpanggil[0][4]
-            if not read_pembayaran_with_join('' , str(DataLama)):
+        if Id_Pemberi != DataTerpanggilBaru[0][4]: #Udate status pembayaran yang diubah
+            DataLama = DataTerpanggilBaru[0][4]
+            read = read_pembayaran_with_join('' , str(DataLama))
+            if read == -1:
                 Update_data('pemberi_zakat', f"id_status_pembayaran_zakat = 2 where id_pemberi_zakat = {DataLama}")
         
         #Update status pembayaran yang dimiliki oleh pemberi yang di ubah

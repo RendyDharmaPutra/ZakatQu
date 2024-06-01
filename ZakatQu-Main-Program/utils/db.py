@@ -126,6 +126,8 @@ def read_pembayaran_with_join(idpembayaran: str = '', idpemberi: str = ''):
     if data :
         return data
     
+    return -1
+    
 def read_distribusi_with_join(iddistribusi: str = ''):
 
     search: str = ''

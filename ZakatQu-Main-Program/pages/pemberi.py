@@ -85,13 +85,25 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
 
 
         nama_pemberi = input("Masukkan nama pemberi zakat : ")
+        if len(nama_pemberi) <= 0:
+            msg = "Nama pemberi tidak boleh kosong"
+            continue
         nik_pemberi=input("Masukkan NIK pemberi zakat : ")
         if len(nik_pemberi)>16:
             msg="NIK yang dimasukkan terlalu panjang"
             continue
         alamat_pemberi=input("Masukkan alamat pemberi zakat : ")
+        if len(alamat_pemberi) <= 0:
+            msg = "Alamat pemberi tidak boleh kosong"
+            continue
         RtRw_pemberi=input("Masukkan RT/RW pemberi zakat : ")
+        if len(RtRw_pemberi) <= 0:
+            msg = "RT/RW pemberi tidak boleh kosong"
+            continue
         telepon_pemberi= input("Masukkan nomor telepon pemberi zakat : ")
+        if len(telepon_pemberi) <= 0:
+            msg = "Nomor telepon pemberi tidak boleh kosong"
+            continue
         status_bayar=2
 
         query_input.append(f'{nama_pemberi}')
@@ -101,19 +113,19 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
         query_input.append(f'{telepon_pemberi}')
         query_input.append(status_bayar)
 
+        print(query_input)
+        input()
+
         Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
         
         if Konfirmasi.lower() == "0":
-            pemberi()
-        
-        else:
-            data_search = read_pemberi(query_input[1])
+            continue
+
+        data_search = read_pemberi('', query_input[1])
 
         if data_search != -1 :
             msg = "NIK yang dimasukkan sudah terdaftar!"
-
             continue
-
 
         QueryInput(query_input,Pemberi,KolomPemberi)           
         print("Data Berhasil Disimpan")
