@@ -172,6 +172,10 @@ def Hapus_data_Penerima(tabel_data, kolom_data):
         read_table("Data Penerima", Lihat_data_Penerima())
 
         idPenerima = input("Masukkan id penerima yang ingin dihapus : ")
+        if len (idPenerima) == 0:
+            message = "id penerima yang dimasukkan tidak boleh kosong!"
+            continue
+
         data_penerima = Lihat_data_Penerima(idPenerima)
         if data_penerima == 0:
             message = "id penerima yang dimasukkan tidak terdaftar!"
@@ -181,6 +185,11 @@ def Hapus_data_Penerima(tabel_data, kolom_data):
         #     message = "id penerima yang dimasukkan tidak terdaftar!"
         #     continue
         
+        Konfirmasi = input("Tekan Enter Untuk Hapus Data, Tekan 0 Untuk Batal")
+        
+        if Konfirmasi.lower() == "0":
+            break
+
         Delete_data(tabel_data,"id_penerima_zakat",idPenerima)
 
         message = "Berhasil menghapus data penerima"
