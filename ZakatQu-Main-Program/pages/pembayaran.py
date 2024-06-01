@@ -77,9 +77,16 @@ def Tambah_pembayaran(akun, NamaTabel, NamaKolom):
             continue
             
         # Jangan diupdate sampai  hasil dari inputKeteranganZakat bisa disolve untuk dimasukkan ke inputquery secara langsung 
-        NamaPemberi = InputNamaPemberi()
+        try:
+            NamaPemberi = InputNamaPemberi()
+        except:
+            Notifikasi = "Data Tidak Ditemukan"
+            continue
+
         if not NamaPemberi:
             Notifikasi = "Masukkan Data Dengan Benar"
+            continue
+        if NamaPemberi == None:
             continue
         JenisZakat, BentukZakat, JumlahZakat = InputKeteranganZakat()
         
@@ -270,7 +277,12 @@ def Edit_pembayaran(akun, NamaTabel, NamaKolom):
             
             
             # [(26, 2500, datetime.date(2024, 5, 21), 1, (3), 1, 1)]
-        Id_Pemberi = InputNamaPemberi("Update") or DataTerpanggil[0][4]
+        try:
+            Id_Pemberi = InputNamaPemberi("Update") or DataTerpanggil[0][4]
+        except:
+            Notifikasi = "Proses Berhenti"
+            continue
+        
         Jenis_Zakat = UpdateJenisZakat() or DataTerpanggil[0][6]
         Bentuk_Zakat = UpdateBentukZakat(Jenis_Zakat) or DataTerpanggil[0][5]
         Jumlah_Pemberian = UpdateJumlahZakat(Bentuk_Zakat, Jenis_Zakat)
