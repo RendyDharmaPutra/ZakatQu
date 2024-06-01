@@ -28,3 +28,20 @@ def validate_amil(data) :
     
 
     return message
+
+
+def validate_empty(data) :
+    message: str = ''
+
+    if len(data[0]) :
+        message = "Nama tidak boleh mengandung Angka!"
+    elif len(data[1]) :
+        message = "NIK tidak boleh mengandung Huruf!"
+    elif len(data[3]) :
+        message = "RT/RW tidak boleh mengandung Huruf!"
+    elif len(data[4]) :
+        message = "Nomor Telepon tidak boleh mengandung Huruf!"
+
+    return message
+
+        
