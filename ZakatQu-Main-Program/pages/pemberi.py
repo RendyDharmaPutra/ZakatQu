@@ -121,7 +121,7 @@ def Tambah_data_Pemberi(KolomPemberi,Pemberi):
         if Konfirmasi.lower() == "0":
             continue
 
-        data_search = read_pemberi('', query_input[1])
+        data_search = read_pemberi(nik=query_input[1])
 
         if data_search != -1 :
             msg = "NIK yang dimasukkan sudah terdaftar!"
@@ -195,7 +195,7 @@ def Edit_data_Pemberi(KolomPemberi,Pemberi):
         Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
         
         if Konfirmasi.lower() == "0":
-            pemberi()
+            continue
 
         Update_data(Pemberi,f"nama_pemberi_zakat='{nama_pemberi}',nik='{nik}',alamat='{alamat}',\"RT/RW\"='{RtRW}',nomor_telepon='{telepon}',id_status_pembayaran_zakat={statusBayar} WHERE id_pemberi_zakat={id_dipilih}")
         msg="Data Berhasil Diubah"
