@@ -2,7 +2,7 @@ import psycopg2
 
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='Easyjust123', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -203,7 +203,7 @@ def Read_Banyak_Zakat_From_Distribusi():
     return data
 
 
-def read_pemberi(nik: str = '') -> list[tuple] :
+def read_pemberioioioi(nik: str = '') -> list[tuple] :
 
     search: str = ''
 
