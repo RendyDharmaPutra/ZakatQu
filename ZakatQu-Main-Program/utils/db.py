@@ -201,24 +201,3 @@ def Read_Banyak_Zakat_From_Distribusi():
     
     data = cur.fetchall()
     return data
-
-
-def read_pemberioioioi(nik: str = '') -> list[tuple] :
-
-    search: str = ''
-
-    if len(nik) > 0 :
-        search = f"WHERE nik = '{nik}'"
-        
-
-    cur.execute(f"SELECT * FROM pemberi_zakat {search}")
-    data = cur.fetchall()
-
-    if data :
-        return data
-    
-    return -1
-    # select pz.id_penerima_zakat, pz.nama_kepala_keluarga, pz.no_kk, pz.alamat, pz."RT/RW", pz.nomor_telepon, sd.nama_status_distribusi
-    # from penerima_zakat pz
-    # join distribusi_zakat dz on pz.id_penerima_zakat = dz.id_penerima_zakat
-    # join status_distribusi sd on dz.id_status_distribusi = sd.id_status_distribusi
