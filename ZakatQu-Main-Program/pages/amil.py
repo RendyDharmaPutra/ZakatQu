@@ -169,12 +169,6 @@ def ubah_amil(tabel_data, kolom_data) :
         data_baru[4] = input("Masukkan RT/RW amil : ") or data_baru[4]
         data_baru[5] = input("Masukkan Nomor Telepon Amil : ") or data_baru[5]
 
-        # Validasi
-        message = validate_amil(data_baru[1:-1])
-
-        if len(message) > 0 :
-            continue
-
         print(data_baru)
 
 
@@ -234,6 +228,6 @@ def hapus_amil(tabel_data) :
             continue
         
 
-        Delete_data_varchar(tabel_data, 'nik', f'{data_baru}')
+        Delete_data_varchar(tabel_data, 'nik', f'{data_baru[0][2]}')
 
         message = "Berhasil menghapus Amil"
