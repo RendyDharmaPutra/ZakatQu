@@ -90,12 +90,14 @@ def Tambah_data_Penerima(tabel_data, kolom_data) :
             message = "Data tidak boleh ada kosong"
             continue
 
-        if QueryInput(data_baru, tabel_data, kolom_data) : 
-            message = "Berhasil menambah Penerima"
-            break
-        else :
-            message = "Gagal menambah Penerima"
-            continue
+        QueryInput(data_baru, tabel_data, kolom_data)
+        message = "Berhasil menambah Penerima"
+        # if QueryInput(data_baru, tabel_data, kolom_data) : 
+        #     message = "Berhasil menambah Penerima"
+        #     break
+        # else :
+        #     message = "Gagal menambah Penerima"
+        #     continue
 
 def Edit_data_Penerima(tabel_data, kolom_data):
     message: str = ''
@@ -139,11 +141,6 @@ def Edit_data_Penerima(tabel_data, kolom_data):
         Telepon = input("Masukkan nomor telepon yang baru : ") or data_baru[5]
 
         Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
-        if Konfirmasi.lower() == "0":
-            break
-        
-        Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
-
         if Konfirmasi.lower() == "0":
             break
 
