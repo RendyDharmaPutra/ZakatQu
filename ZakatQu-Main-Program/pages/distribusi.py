@@ -84,12 +84,13 @@ def memasukkan_semua_data(tabel_data, kolom_data, akun):
         except:
             read_table("Data Penerima", None)
         
-        DataZakat = Hitung_Jumlah_Zakat()
+        DataJumlahZakat = Hitung_Jumlah_Zakat()
         
-        if DataZakat[0][1] == 0 or DataZakat[1][1] == 0 or DataZakat[2][1] == 0:
-            message = "Data Zakat Tidak Ada"
-            continue
-
+        for i in range(len(DataJumlahZakat)):
+            if DataJumlahZakat[i][1] == 0:
+                message = "Data Zakat Tidak Ada"
+                continue
+        
         InputPenerima = input("Masukkan ID Penerima = ")
         
         try:
@@ -228,6 +229,7 @@ def edit_data_distribusi(tabel_data, kolom_data, akun):
             while True:
                 if len(Notifikasi) > 0:
                     print(Notifikasi)
+                    input()
                 match i:
                     case 0:
                         BentukZakat = 1
