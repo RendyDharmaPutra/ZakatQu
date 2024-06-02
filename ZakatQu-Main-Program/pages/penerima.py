@@ -6,36 +6,21 @@ def penerima(akun):
     
     nama_tabel = 'penerima_zakat'
     kolom_tabel = 'nama_kepala_keluarga,no_kk,alamat,"RT/RW",nomor_telepon'
-    print("Halaman Penerima")
-    read_table("Data Penerima", read_penerima())
     
-    if akun == "Takmir":
-        input()
-        return
+    msg = ''
     
-    print('''1. Tambah Penerima \n2. Edit Penerima \n3. Hapus Penerima \n4. Kembali ke menu sebelumnya''')
-    
-    Entry = int(input("Masukkan pilihan : "))
-    match Entry:
-        case 1:
-            Tambah_data_Penerima(nama_tabel, kolom_tabel)
-            input("Tekan Enter untuk kembali ke menu")
-        case 2:
-            Edit_data_Penerima(nama_tabel,kolom_tabel)
-            input("Tekan Enter untuk kembali ke menu")
-        case 3:
-            Hapus_data_Penerima(nama_tabel,kolom_tabel)
-            input("Tekan Enter untuk kembali ke menu")
-        case 4:
-            print("Kembali ke menu sebelumnya ?  ")
-            input()
-
+    while True:
+        clear_screen()
         print("Halaman Penerima\n")
 
         if len(msg) > 0:
             print(msg)
 
         read_table("Data Penerima", read_penerima())
+        
+        if akun == "Takmir":
+            input()
+            return
             
         print('''1. Tambah Penerima \n2. Edit Penerima \n3. Hapus Penerima \n4. Kembali ke menu sebelumnya''')
         
