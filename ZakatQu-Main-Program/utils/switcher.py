@@ -17,37 +17,37 @@ def main_menu(var: str, akun: List[str] | str):
             
             input("Enter untuk kembali ke Halaman utama")
         case '2':
-            if akun != "Takmir" :
-                pembayaran.pembayaran(akun)
-                return
+            # if akun != "Takmir" :
+            pembayaran.pembayaran(akun)
+            #     return
             
-            print("\nAnda tidak dapat mengakses fitur ini !")
+            # print("\nAnda tidak dapat mengakses fitur ini !")
             
-            input("Enter untuk kembali ke Halaman utama")
+            # input("Enter untuk kembali ke Halaman utama")
         case '3':
-            if akun != "Takmir" :
-                distribusi.distribusi(akun)
-                return
+            # if akun != "Takmir" :
+            distribusi.distribusi(akun)
+            #     return
             
-            print("\nAnda tidak dapat mengakses fitur ini !")
+            # print("\nAnda tidak dapat mengakses fitur ini !")
             
-            input("Enter untuk kembali ke Halaman utama")
+            # input("Enter untuk kembali ke Halaman utama")
         case '4':
-            if akun != "Takmir" :
-                pemberi.pemberi()
-                return
+        #     if akun != "Takmir" :
+            pemberi.pemberi(akun)
+        #         return
             
-            print("\nAnda tidak dapat mengakses fitur ini !")
+        #     print("\nAnda tidak dapat mengakses fitur ini !")
             
-            input("Enter untuk kembali ke Halaman utama")
+        #     input("Enter untuk kembali ke Halaman utama")
         case '5':
-            if akun != "Takmir" :
-                penerima.penerima()
-                return
+            # if akun != "Takmir" :
+            penerima.penerima(akun)
+            #     return
             
-            print("\nAnda tidak dapat mengakses fitur ini !")
+            # print("\nAnda tidak dapat mengakses fitur ini !")
             
-            input("Enter untuk kembali ke Halaman utama")
+            # input("Enter untuk kembali ke Halaman utama")
         case '6':
             if akun != "Takmir" :
                 setting.setting(akun)

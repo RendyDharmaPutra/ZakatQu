@@ -160,9 +160,9 @@ INSERT INTO amil_zakat (nama_amil_zakat, nik, alamat, "RT/RW", nomor_telepon) va
 ('Cahaya Kusuma', '3508416279530684', 'Jl. Kenanga No. 15, Kelurahan Sunter Jaya', '04/17', '082156789012')
 
 INSERT INTO pemberi_zakat (nama_pemberi_zakat, nik, alamat, "RT/RW", nomor_telepon, id_status_pembayaran_zakat) values
-('Fajar Hidayat', '3509724186530729', 'Jl. Trunojoyo VII No. 31', '03/20', '082267890123', 2),
+('Fajar Hidayat', '3509724186530729', 'Jl. Trunojoyo VII No. 31', '03/20', '082267890123', 1),
 ('Indah Permata Sari', '3502894716503928', 'Jl. Trunojoyo VII No. 47', '03/20', '082378901234', 2),
-('Joko Susilo', '3504719286530741', 'Jl. Trunojoyo VII No. 101', '03/20','085189012345', 2),
+('Joko Susilo', '3504719286530741', 'Jl. Trunojoyo VII No. 101', '03/20','085189012345', 1),
 ('Mila Setiawan', '3506184927530816', 'Jl. Trunojoyo VII No. 88', '03/20', '085290123456', 2)
 
 INSERT INTO pembayaran_zakat (besar_pemberian, tanggal_pemberian, id_amil_zakat, id_pemberi_zakat, id_bentuk_zakat, id_jenis_zakat) values

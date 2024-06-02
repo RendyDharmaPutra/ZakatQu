@@ -5,7 +5,7 @@ from components.table import read_table
 from utils.db import cur, conn
 from utils.db import read_pemberi
 
-def pemberi():
+def pemberi(akun):
     KolomPemberi='nama_pemberi_zakat,nik,alamat,"RT/RW",nomor_telepon,id_status_pembayaran_zakat'
     Pemberi='pemberi_zakat'
     msg=''
@@ -18,6 +18,10 @@ def pemberi():
             print(msg)
 
         read_table("Data Pemberi", read_pemberi())
+        
+        if akun == "Takmir" :
+            input()
+            return
             
         print("Tambah[1], Edit[2], Hapus[3], Kembali[0]")
         pilihan=input("Masukkan fitur yang dipilih : ")

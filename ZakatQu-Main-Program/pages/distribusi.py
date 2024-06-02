@@ -18,6 +18,10 @@ def distribusi(akun):
             print(f"{message}\n")
 
         read_table("Data Distribusi", read_distribusi_with_join())
+        
+        if akun == 'Takmir' :
+            input()
+            return
 
         print("((1) Tambah Data Distribusi, (2) Edit Data Penerima, (3) Hapus Data Distribusi,(0) Keluar")
         fitur = input("Masukkan fitur yang dipilih : ")

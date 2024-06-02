@@ -10,7 +10,7 @@ def pembayaran(akun: str):
 
     message: str = ''
 
-    while akun != "Takmir" :
+    while True:
         clear_screen()
 
         print("Halaman Amil\n")
@@ -22,9 +22,14 @@ def pembayaran(akun: str):
         
         read_table("Data Pembayaran Zakat", read_pembayaran_with_join())
         
+        if akun == "Takmir" :
+            input()
+            return
+        
         print("Tambah[1], Edit[2], Hapus[3], Kembali[0]")
         InputPengguna = input("Masukkan fitur yang dipilih : ")
 
+        input()
 
         match InputPengguna :
             case '1':
