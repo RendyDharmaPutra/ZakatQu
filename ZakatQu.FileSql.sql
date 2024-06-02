@@ -62,7 +62,7 @@ CREATE TABLE penerima_zakat (
     No_KK                  	VARCHAR(16) NOT NULL,
     alamat                  VARCHAR(50) NOT NULL,
     "RT/RW"                 VARCHAR(10) NOT NULL,
-    nomor_telepon           VARCHAR(15) NOT NULL 
+    nomor_telepon           VARCHAR(15) NOT NULL
 );
 
 CREATE UNIQUE INDEX distribusi_zakat__idx ON
@@ -90,7 +90,7 @@ CREATE TABLE detail_distribusi_zakat (
     id_detail_distribusi                 SERIAL NOT NULL,
     jumlah_zakat                         INTEGER NOT NULL, 
     id_distribusi_zakat                  INTEGER NOT NULL,
-    id_bentuk_zakat         INTEGER NOT NULL
+    id_bentuk_zakat         INTEGER NOT NULL,
 );
 
 ALTER TABLE detail_distribusi_zakat ADD CONSTRAINT detail_distribusi_zakat_pk PRIMARY KEY ( id_detail_distribusi );
@@ -101,7 +101,7 @@ ALTER TABLE detail_distribusi_zakat
 
 ALTER TABLE detail_distribusi_zakat
     ADD CONSTRAINT detail_distribusi_zakat_distribusi_zakat_fk FOREIGN KEY ( id_distribusi_zakat )
-        REFERENCES distribusi_zakat ( id_distribusi_zakat );
+        REFERENCES distribusi_zakat ( id_distribusi_zakat ) ON DELETE CASCADE;
 
 ALTER TABLE distribusi_zakat
     ADD CONSTRAINT distribusi_zakat_amil_zakat_fk FOREIGN KEY ( id_amil_zakat )
@@ -113,7 +113,7 @@ ALTER TABLE distribusi_zakat
 
 ALTER TABLE pembayaran_zakat
     ADD CONSTRAINT pembayaran_zakat_amil_zakat_fk FOREIGN KEY ( id_amil_zakat )
-        REFERENCES amil_zakat ( id_amil_zakat );
+        REFERENCES amil_zakat ( id_amil_zakat ) ON DELETE CASCADE;
 
 ALTER TABLE pembayaran_zakat
     ADD CONSTRAINT pembayaran_zakat_bentuk_zakat_fk FOREIGN KEY ( id_bentuk_zakat )
@@ -125,7 +125,7 @@ ALTER TABLE pembayaran_zakat
 
 ALTER TABLE pembayaran_zakat
     ADD CONSTRAINT pembayaran_zakat_pemberi_zakat_fk FOREIGN KEY ( id_pemberi_zakat )
-        REFERENCES pemberi_zakat ( id_pemberi_zakat );
+        REFERENCES pemberi_zakat ( id_pemberi_zakat ) ON DELETE CASCADE;
 
 ALTER TABLE pemberi_zakat
     ADD CONSTRAINT pemberi_zakat_status_pembayaran_zakat_fk FOREIGN KEY ( id_status_pembayaran_zakat )
@@ -133,7 +133,7 @@ ALTER TABLE pemberi_zakat
 
 ALTER TABLE distribusi_zakat
     ADD CONSTRAINT distribusi_zakat_penerima_zakat_fk FOREIGN KEY ( id_penerima_zakat )
-        REFERENCES penerima_zakat ( id_penerima_zakat );
+        REFERENCES penerima_zakat ( id_penerima_zakat ) ON DELETE CASCADE;
 
 INSERT INTO status_pembayaran_zakat (id_status_pembayaran_zakat, nama_pembayaran_zakat) values
 (1, 'Sudah Membayar'),

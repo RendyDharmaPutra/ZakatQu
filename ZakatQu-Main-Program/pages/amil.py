@@ -1,7 +1,7 @@
 from utils.db import Update_data, read_amil, QueryInput, Delete_data, Delete_data_varchar
 from utils.terminal import clear_screen
 from components.table import read_table
-from utils.validate import validate_amil
+from utils.validate import validate_empty
 
 
 def amil(akun: str):
@@ -90,7 +90,7 @@ def tambah_amil(tabel_data, kolom_data) :
         data_baru.append(input("Masukkan Nomor Telepon Amil : "))
 
         # Validasi
-        message = validate_amil(data_baru)
+        message = validate_empty(data_baru)
 
         if len(message) > 0 :
             continue
@@ -169,12 +169,6 @@ def ubah_amil(tabel_data, kolom_data) :
         data_baru[4] = input("Masukkan RT/RW amil : ") or data_baru[4]
         data_baru[5] = input("Masukkan Nomor Telepon Amil : ") or data_baru[5]
 
-        # Validasi
-        message = validate_amil(data_baru[1:-1])
-
-        if len(message) > 0 :
-            continue
-
         print(data_baru)
 
 
@@ -234,6 +228,6 @@ def hapus_amil(tabel_data) :
             continue
         
 
-        Delete_data_varchar(tabel_data, 'nik', f'{data_baru}')
+        Delete_data_varchar(tabel_data, 'nik', f'{data_baru[0][2]}')
 
         message = "Berhasil menghapus Amil"

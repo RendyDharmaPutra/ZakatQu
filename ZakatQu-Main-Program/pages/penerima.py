@@ -30,6 +30,38 @@ def penerima(akun):
             print("Kembali ke menu sebelumnya ?  ")
             input()
 
+        print("Halaman Penerima\n")
+
+        if len(msg) > 0:
+            print(msg)
+
+        read_table("Data Penerima", read_penerima())
+            
+        print('''1. Tambah Penerima \n2. Edit Penerima \n3. Hapus Penerima \n4. Kembali ke menu sebelumnya''')
+        
+        Entry = input("Masukkan pilihan : ")
+
+        match Entry :
+            case '1':
+                Tambah_data_Penerima(nama_tabel, kolom_tabel)
+            case '2':
+                Edit_data_Penerima(nama_tabel,kolom_tabel)
+            case '3':
+                Hapus_data_Penerima(nama_tabel,kolom_tabel)
+            case '4':
+                confirm: str = input("Masukkan 0 untuk keluar ke Halaman Utama : ")
+
+                if confirm == '0' :
+                    return -1
+
+                elif len(confirm) > 0 and confirm != '0' :
+                    msg = "Input tidak valid"
+
+                    continue
+
+            case _ :
+                msg = "Input tidak valid"
+                continue
 
 def Lihat_data_Penerima(no_kk: str = ''):
     search : str = ''
@@ -59,7 +91,7 @@ def Tambah_data_Penerima(tabel_data, kolom_data) :
 
         confirm: str = input("Masukkan 0 untuk keluar dari fitur : ")
         if confirm == '0' :
-            return -1
+            return
         elif len(confirm) > 0 and confirm != '0' :
             message = "Input tidak valid"
             continue
@@ -78,12 +110,14 @@ def Tambah_data_Penerima(tabel_data, kolom_data) :
             message = "Data tidak boleh ada kosong"
             continue
 
-        if QueryInput(data_baru, tabel_data, kolom_data) : 
-            message = "Berhasil menambah Penerima"
-            break
-        else :
-            message = "Gagal menambah Penerima"
-            continue
+        QueryInput(data_baru, tabel_data, kolom_data)
+        message = "Berhasil menambah Penerima"
+        # if QueryInput(data_baru, tabel_data, kolom_data) : 
+        #     message = "Berhasil menambah Penerima"
+        #     break
+        # else :
+        #     message = "Gagal menambah Penerima"
+        #     continue
 
 def Edit_data_Penerima(tabel_data, kolom_data):
     message: str = ''
@@ -98,59 +132,41 @@ def Edit_data_Penerima(tabel_data, kolom_data):
 
         confirm: str = input("Masukkan 0 untuk keluar dari fitur : ")
         if confirm == '0':
-            return -1
+            return
         elif len(confirm) > 0 and confirm != '0':
             message = "Input tidak valid"
             continue
 
         IdDipilih = input("Masukkan id penerima yang ingin diubah : ")
+
+        if len(IdDipilih) == 0:
+            message = "id penerima yang dimasukkan tidak boleh kosong!"
+            continue
+
         data_baru = Lihat_data_Penerima(IdDipilih)[0]
+
         print(data_baru)
-        if data_baru == 0:
+        if len(data_baru) == 0:
             message = "id penerima yang dimasukkan tidak terdaftar!"
             continue
 
-        #Tabel Nama Penerima
-        NamaPenerima = input("Masukkan nama penerima yang baru : ")
-        if NamaPenerima == '':
-            print("Nama penerima tidak boleh kosong")
-            continue
-        NamaPenerima = NamaPenerima or data_baru[1]
+        NamaPenerima = input("Masukkan nama penerima yang baru : ") or data_baru[1]
         #Tabel Nomor KK
-        NoKK = input("Masukkan no KK yang baru : ")
-        if NoKK == '':
-            print("No KK tidak boleh kosong")
-            continue
-        NoKK = NoKK or data_baru[2]
+        NoKK = input("Masukkan no KK yang baru : ") or data_baru[2]
         #Tabel Alamat Penerima
-        Alamat = input("Masukkan alamat yang baru : ")
-        if Alamat == '':
-            print("Alamat tidak boleh kosong")
-            continue
-        Alamat = Alamat or data_baru[3]
+        Alamat = input("Masukkan alamat yang baru : ") or data_baru[3]
         #Tabel RT/RW
-        RtRw = input("Masukkan RT/RW yang baru : ")
-        if RtRw == '':
-            print("RT/RW tidak boleh kosong")
-            continue
-        RtRw = RtRw or data_baru[4]
+        RtRw = input("Masukkan RT/RW yang baru : ") or data_baru[4]
         #Tabel Nomor Telepon
-        Telepon = input("Masukkan nomor telepon yang baru : ")
-        if Telepon == '':
-            print("Nomor telepon tidak boleh kosong")
-            continue
-        Telepon = Telepon or data_baru[5]
+        Telepon = input("Masukkan nomor telepon yang baru : ") or data_baru[5]
 
         Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
         if Konfirmasi.lower() == "0":
             break
-        updated_data = Lihat_data_Penerima(IdDipilih)[0]
-        if (updated_data[1] == NamaPenerima and updated_data[2] == NoKK 
-            and updated_data[3] == Alamat and updated_data[4] == RtRw 
-            and updated_data[5] == Telepon):
-            message = "Berhasil mengubah data penerima"
-        else:
-            message = "Gagal mengubah data penerima"
+
+        Update_data(tabel_data, f"id_penerima_zakat = {IdDipilih}, nama_kepala_keluarga = '{NamaPenerima}', no_kk = '{NoKK}', alamat = '{Alamat}', \"RT/RW\" = '{RtRw}', nomor_telepon = '{Telepon}' WHERE id_penerima_zakat = {IdDipilih}")
+
+        message = "Berhasil mengubah data penerima"
 
 
 def Hapus_data_Penerima(tabel_data, kolom_data):
@@ -165,7 +181,7 @@ def Hapus_data_Penerima(tabel_data, kolom_data):
 
         confirm: str = input("Masukkan 0 untuk keluar dari fitur : ")
         if confirm == '0':
-            return -1
+            return
         elif len(confirm) > 0 and confirm != '0':
             message = "Input tidak valid"
             continue
@@ -173,6 +189,10 @@ def Hapus_data_Penerima(tabel_data, kolom_data):
         read_table("Data Penerima", Lihat_data_Penerima())
 
         idPenerima = input("Masukkan id penerima yang ingin dihapus : ")
+        if len (idPenerima) == 0:
+            message = "id penerima yang dimasukkan tidak boleh kosong!"
+            continue
+
         data_penerima = Lihat_data_Penerima(idPenerima)
         if data_penerima == 0:
             message = "id penerima yang dimasukkan tidak terdaftar!"
@@ -182,6 +202,11 @@ def Hapus_data_Penerima(tabel_data, kolom_data):
         #     message = "id penerima yang dimasukkan tidak terdaftar!"
         #     continue
         
+        Konfirmasi = input("Tekan Enter Untuk Hapus Data, Tekan 0 Untuk Batal")
+        
+        if Konfirmasi.lower() == "0":
+            break
+
         Delete_data(tabel_data,"id_penerima_zakat",idPenerima)
 
         message = "Berhasil menghapus data penerima"

@@ -2,7 +2,7 @@ import psycopg2
 
 
 
-conn = psycopg2.connect(database='ZakatQu', user='postgres', password='19Januari', host='localhost', port=5432)
+conn = psycopg2.connect(database='ZakatQu', user='postgres', password='12345678', host='localhost', port=5432)
 cur = conn.cursor()
 
 # UNIVERSAL================== #
@@ -88,6 +88,7 @@ def read_pemberi(id: str = '', nik: str = ''):
     
     if data :
         return data
+    return -1
     
 def read_pembayaran(id: str = ''):
 
@@ -124,6 +125,8 @@ def read_pembayaran_with_join(idpembayaran: str = '', idpemberi: str = ''):
     
     if data :
         return data
+    
+    return -1
     
 def read_distribusi_with_join(iddistribusi: str = ''):
 

@@ -88,6 +88,11 @@ def memasukkan_semua_data(tabel_data, kolom_data, akun):
         except:
             read_table("Data Penerima", None)
         
+        DataJumlahZakat = Hitung_Jumlah_Zakat()
+        if DataJumlahZakat[0][1] == 0 and DataJumlahZakat[1][1] == 0 and DataJumlahZakat[2][1] == 0:
+            message = "Data Zakat Tidak Ada"
+            continue
+        
         InputPenerima = input("Masukkan ID Penerima = ")
         
         try:
@@ -96,9 +101,15 @@ def memasukkan_semua_data(tabel_data, kolom_data, akun):
                 continue
         except:
             pass
+
+
         queryInput.append(akun[0][0])
         queryInput.append(0)
-        queryInput.append(int(InputPenerima))
+        try: 
+            queryInput.append(int(InputPenerima))
+        except:
+            message = "Data Penerima Tidak Valid"
+            continue
         
         Konfirmasi = input("Tekan Enter Untuk Simpan Data, Tekan 0 Untuk Batal")
         
@@ -107,30 +118,37 @@ def memasukkan_semua_data(tabel_data, kolom_data, akun):
         
         else:
             QueryInput(queryInput, tabel_data, kolom_data)
-            print("Data Ditambahkan")
-            input()
         
         IdDistribusi = int(read_penerima_in_distribusi(InputPenerima)[0][0])
-        
-        for i in range(3):
+
+        for i in range(len(DataJumlahZakat)):
             read_table("Data Banyak Zakat", Hitung_Jumlah_Zakat())
             queryInput = []
             BentukZakat = 0
-            match i:
-                case 0:
-                    Input = input("Masukkan Jumlah Beras (Gram) = ") or '0'
-                    BentukZakat = 1
-                case 1:
-                    Input = input("Masukkan Jumlah Uang (Ribuan) = ") or '0'
-                    BentukZakat = 2
-                case 2:
-                    Input = input("Masukkan Jumlah Emas (Gram) = ") or '0'
-                    BentukZakat = 3
-                    
-            queryInput.append(int(Input))
-            queryInput.append(IdDistribusi)
-            queryInput.append(BentukZakat)
-            QueryInput(queryInput, TabelDetail, KolomDetail)
+            msg = ''
+            while True: 
+                match i:
+                    case 0:
+                        Input = input("Masukkan Jumlah Beras (Gram) = ") or '0'
+                        BentukZakat = 1
+                    case 1:
+                        Input = input("Masukkan Jumlah Uang (Ribuan) = ") or '0'
+                        BentukZakat = 2
+                    case 2:
+                        Input = input("Masukkan Jumlah Emas (Gram) = ") or '0'
+                        BentukZakat = 3
+
+                if int(Input) > DataJumlahZakat[i][1]:
+                    msg = "Jumlah yang anda berikan terlalu besar"
+                    continue
+                        
+                queryInput.append(int(Input))
+                queryInput.append(IdDistribusi)
+                queryInput.append(BentukZakat)
+                QueryInput(queryInput, TabelDetail, KolomDetail)
+
+                break
+
         
         Konfirmasi = input("Apakah Distribusi Telah di Berikan ? (Y/N)")
         
@@ -153,10 +171,15 @@ def Hitung_Jumlah_Zakat():
     
     for j, i in enumerate(Zakat):
         if Diterima[j][1] is None:
-            Besar = i[1] - 0
+            Besar = 0
+            if i[1] != None:
+                Besar = i[1] - 0
             Datas.append([i[0], Besar])
             continue
-        Besar = i[1] - Diterima[j][1]
+        if i[1] != None:
+            Besar = i[1] - Diterima[j][1]
+        else:
+            Besar = 0
         Datas.append((i[0], Besar))
     
     return Datas
@@ -217,6 +240,7 @@ def edit_data_distribusi(tabel_data, kolom_data, akun):
             while True:
                 if len(Notifikasi) > 0:
                     print(Notifikasi)
+                    input()
                 match i:
                     case 0:
                         BentukZakat = 1

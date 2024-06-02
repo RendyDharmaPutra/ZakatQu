@@ -28,3 +28,22 @@ def validate_amil(data) :
     
 
     return message
+
+
+def validate_empty(data) :
+    message: str = ''
+
+    if len(data[0])==0 :
+        message = "Nama tidak boleh kosong!"
+    elif len(data[1])==0 :
+        message = "NIK tidak boleh kosong!"
+    elif len(data[2])==0 :
+        message = "Alamat tidak boleh kosong!"
+    elif len(data[3])==0 :
+        message = "RT/RW tidak boleh kosong!"
+    elif len(data[4])==0:
+        message = "Nomor Telepon tidak boleh kosong!"
+
+    return message
+
+        
