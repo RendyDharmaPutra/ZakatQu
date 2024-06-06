@@ -140,7 +140,6 @@ INSERT INTO status_pembayaran_zakat (id_status_pembayaran_zakat, nama_pembayaran
 (2, 'Belum Membayar')
 
 INSERT INTO status_distribusi (id_status_distribusi, nama_status_distribusi) values 
-(0, 'Tidak Ada Keterangan'),
 (1, 'Telah Diberikan'),
 (2, 'Belum Diberikan')
 
@@ -153,31 +152,49 @@ INSERT INTO bentuk_zakat (id_bentuk_zakat, nama_bentuk_zakat) values
 (2, 'Uang'),
 (3, 'Emas')
 
-INSERT INTO amil_zakat (nama_amil_zakat, nik, alamat, "RT/RW", nomor_telepon) values
+INSERT INTO amil_zakat (nama_amil_zakat, nik, alamat, "RT/RW", nomor_telepon) VALUES
 ('Reza Thoriqis Sulthon', '3509065508124739', 'Jl Letjen Panjaitan No.30', '03/20', '082123456789'),
 ('Ade Kurniawan', '3917548206530905', 'Jl Trunoyojo VII/III Linkungan Sawahan Cantikan', '03/20', '085712345678'),
-('Budi Wijaya', '3501974286503914', 'Jl. Merdeka No. 10, Kelurahan Gambir', '04/20', '081234567890'),
-('Cahaya Kusuma', '3508416279530684', 'Jl. Kenanga No. 15, Kelurahan Sunter Jaya', '04/17', '082156789012')
+('Ahmad Fauzi', '3501234567890123', 'Jl. Trunojoyo No.10', '01/20', '089123456789'),
+('Budi Prasetyo', '3502345678901234', 'Jl. Trunojoyo No.12', '01/20', '081234567890'),
+('Chandra Wijaya', '3503456789012345', 'Jl. Trunojoyo No.14', '02/20', '085234567890'),
+('Dian Permata', '3504567890123456', 'Jl. Trunojoyo No.16', '02/20', '089234567891'),
+('Eka Sari', '3505678901234567', 'Jl. Trunojoyo No.18', '03/20', '081345678901'),
+('Farid Santoso', '3506789012345678', 'Jl. Trunojoyo No.20', '03/20', '085345678902'),
+('Gita Mawarni', '3507890123456789', 'Jl. Trunojoyo No.22', '01/20', '089456789012');
 
-INSERT INTO pemberi_zakat (nama_pemberi_zakat, nik, alamat, "RT/RW", nomor_telepon, id_status_pembayaran_zakat) values
-('Fajar Hidayat', '3509724186530729', 'Jl. Trunojoyo VII No. 31', '03/20', '082267890123', 1),
-('Indah Permata Sari', '3502894716503928', 'Jl. Trunojoyo VII No. 47', '03/20', '082378901234', 2),
-('Joko Susilo', '3504719286530741', 'Jl. Trunojoyo VII No. 101', '03/20','085189012345', 1),
-('Mila Setiawan', '3506184927530816', 'Jl. Trunojoyo VII No. 88', '03/20', '085290123456', 2)
+INSERT INTO pemberi_zakat (nama_pemberi_zakat, nik, alamat, "RT/RW", nomor_telepon, id_status_pembayaran_zakat) VALUES
+('Reza Thoriqis Sulthon', '3509065508124739', 'Jl Letjen Panjaitan No.30', '03/20', '082123456789', 2),
+('Ade Kurniawan', '3917548206530905', 'Jl Trunoyojo VII/III Linkungan Sawahan Cantikan', '03/20', '085712345678', 2),
+('Budi Santoso', '3501234567890123', 'Jl. Trunojoyo No.10', '01/20', '089123456789', 2),
+('Siti Aminah', '3502345678901234', 'Jl. Trunojoyo No.12', '01/20', '081234567890', 2),
+('Joko Widodo', '3503456789012345', 'Jl. Trunojoyo No.14', '02/20', '085234567890', 2),
+('Ani Yudhoyono', '3504567890123456', 'Jl. Trunojoyo No.16', '02/20', '089234567891', 2),
+('Ratna Dewi', '3505678901234567', 'Jl. Trunojoyo No.18', '03/20', '081345678901', 2),
+('Taufik Hidayat', '3506789012345678', 'Jl. Trunojoyo No.20', '03/20', '085345678902', 2),
+('Andi Lala', '3507890123456789', 'Jl. Trunojoyo No.22', '01/20', '089456789012', 2),
+('Dewi Sartika', '3508901234567890', 'Jl. Trunojoyo No.24', '01/20', '081456789012', 2),
+('Fajar Nugroho', '3509012345678901', 'Jl. Trunojoyo No.26', '02/20', '085456789012', 2),
+('Gina Indah', '3500123456789012', 'Jl. Trunojoyo No.28', '02/20', '089567890123', 2),
+('Hendra Kurniawan', '3501234567890234', 'Jl. Trunojoyo No.30', '03/20', '081567890123', 2),
+('Ika Sari', '3502345678902345', 'Jl. Trunojoyo No.32', '03/20', '085567890123', 2),
+('Johan Setiawan', '3503456789012456', 'Jl. Trunojoyo No.34', '01/20', '089678901234', 2),
+('Kiki Amelia', '3504567890123457', 'Jl. Trunojoyo No.36', '01/20', '081678901234', 2),
+('Lukman Hakim', '3505678901234568', 'Jl. Trunojoyo No.38', '02/20', '085678901234', 2),
+('Maya Anggraini', '3506789012345679', 'Jl. Trunojoyo No.40', '02/20', '089789012345', 2),
+('Nina Putri', '3507890123456780', 'Jl. Trunojoyo No.42', '03/20', '081789012345', 2),
+('Oki Setiana', '3508901234567891', 'Jl. Trunojoyo No.44', '03/20', '085789012345', 2),
+('Pandu Aditya', '3509012345678902', 'Jl. Trunojoyo No.46', '01/20', '089890123456', 2),
+('Qory Sandioriva', '3500123456789013', 'Jl. Trunojoyo No.48', '01/20', '081890123456', 2);
 
-INSERT INTO pembayaran_zakat (besar_pemberian, tanggal_pemberian, id_amil_zakat, id_pemberi_zakat, id_bentuk_zakat, id_jenis_zakat) values
-(2500, '12-10-2024', 1, 1, 1, 1),
-(50000, '7-10-2024', 2, 3, 2, 2)
-
-INSERT INTO penerima_zakat (nama_kepala_keluarga, No_KK, alamat, "RT/RW", nomor_telepon) values
-('Putu Adi', '3509064281350697', 'Jl. Trunojoyo VII No. 17', '03/20', '088145678901'),
-('Rina Wulandari', '3509061742385069', 'Jl. Trunojoyo VII No. 25', '03/20', '0882-5678-9012')
-
-INSERT INTO distribusi_zakat (id_amil_zakat, id_status_distribusi, id_penerima_zakat) values
-(1, 0, 1),
-(1, 0, 2)
-
-INSERT INTO detail_distribusi_zakat (jumlah_zakat, id_distribusi_zakat, id_bentuk_zakat) values
-(5000, 2, 1),
-(21000, 2, 2),
-(25, 2, 3)
+INSERT INTO penerima_zakat (nama_kepala_keluarga, No_KK, alamat, "RT/RW", nomor_telepon) VALUES
+('Fajar Nugroho', '3501234567890123', 'Jl. Trunojoyo No.10', '01/20', '089123456789'),
+('Ratna Dewi', '3502345678901234', 'Jl. Trunojoyo No.12', '01/20', '081234567890'),
+('Taufik Hidayat', '3503456789012345', 'Jl. Trunojoyo No.14', '02/20', '085234567890'),
+('Andi Lala', '3504567890123456', 'Jl. Trunojoyo No.16', '02/20', '089234567891'),
+('Johan Setiawan', '3505678901234567', 'Jl. Trunojoyo No.18', '03/20', '081345678901'),
+('Joko Widodo', '3506789012345678', 'Jl. Trunojoyo No.20', '03/20', '085345678902'),
+('Lukman Hakim', '3507890123456789', 'Jl. Trunojoyo No.22', '01/20', '089456789012'),
+('Hendra Kurniawan', '3508901234567890', 'Jl. Trunojoyo No.24', '01/20', '081456789012'),
+('Oki Setiana', '3509012345678901', 'Jl. Trunojoyo No.26', '02/20', '085456789012'),
+('Pandu Aditya', '3500123456789012', 'Jl. Trunojoyo No.28', '02/20', '089567890123'),

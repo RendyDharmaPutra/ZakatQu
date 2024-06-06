@@ -104,7 +104,7 @@ def memasukkan_semua_data(tabel_data, kolom_data, akun):
 
 
         queryInput.append(akun[0][0])
-        queryInput.append(0)
+        queryInput.append(2)
         try: 
             queryInput.append(int(InputPenerima))
         except:
@@ -218,7 +218,7 @@ def edit_data_distribusi(tabel_data, kolom_data, akun):
             Data = read_distribusi(Input)
             DataLama = Data[0][3]
             IdAmil = Data[0][1]
-            StatusDistribusi = 0
+            StatusDistribusi = 2
             Penerima = Update_Penerima() or Data[0][3]
         except:
             Notifikasi = "Data Penerima Tidak Valid"
